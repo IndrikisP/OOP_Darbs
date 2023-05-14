@@ -1,4 +1,4 @@
-package com.example.Deikstras_Lidosta;
+package com.lidosta.Deikstras_Lidosta;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
