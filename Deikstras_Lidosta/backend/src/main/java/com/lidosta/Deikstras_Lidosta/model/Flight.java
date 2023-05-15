@@ -14,10 +14,14 @@ public class Flight {
     UUID flightId;
     UUID fromId;
     UUID toId;
-    float distance;
+    int distance;
     float price;
     Date timeOfArrival;
     Date timeOfDeparture;
     String timeZone;
     UUID airplaneId;
+    String company;
+
+    public Flight() {
+    }
 }
