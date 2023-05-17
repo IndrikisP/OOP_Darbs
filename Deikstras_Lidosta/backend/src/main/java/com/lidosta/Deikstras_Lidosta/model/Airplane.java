@@ -10,8 +10,14 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Airplane {
-    UUID airplaneId;
-    String model;
-    String type;
-    int passengerCount;
+    private UUID airplaneId;
+    private String model;
+    private String type;
+    private int passengerCount;
+
+    public Airplane(String type, String model, int passengerCount) {
+        this.model = model;
+        this.type = type;
+        this.passengerCount = passengerCount;
+    }
 }

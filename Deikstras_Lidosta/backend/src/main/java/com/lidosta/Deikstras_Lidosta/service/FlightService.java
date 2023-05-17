@@ -29,6 +29,6 @@ public class FlightService {
                 UUID.fromString("123e4567-e89b-12d3-a456-426614174001"),
                 flight.getCompany()
         );
-        return (Flight) dao.insert(id, flightDB);
+        return (Flight) dao.insert(flightDB);
     }
 }

@@ -18,21 +18,20 @@ public class FlightAccessService implements Dao<Flight> {
     }
 
     @Override
-    public Flight insert(UUID id, Flight flight) {
-        final String sql =
-                "  INSERT INTO flights (flight_id," +
-                        "     from_id," +
-                        "     to_id," +
-                        "     distance," +
-                        "     price," +
-                        "     time_of_arrival," +
-                        "     time_of_departure," +
-                        "     timezone," +
-                        "     airplane_id," +
-                        "     company)" +
-                        "  VALUES (?,?,?,?,?,?,?,?,?,?)";
+    public Flight insert(Flight flight) {
+        final String sql = "INSERT INTO flights (flight_id," +
+                           "  from_id," +
+                           "  to_id," +
+                           "  distance," +
+                           "  price," +
+                           "  time_of_arrival," +
+                           "  time_of_departure," +
+                           "  timezone," +
+                           "  airplane_id," +
+                           "  company)" +
+                           " VALUES (?,?,?,?,?,?,?,?,?,?)";
         jdbcTemplate.update(sql,
-                id,
+                flight.getFlightId(),
                 flight.getFromId(),
                 flight.getToId(),
                 flight.getDistance(),
@@ -62,5 +61,15 @@ public class FlightAccessService implements Dao<Flight> {
                     resultSet.getString("company")
                     );
         });
+    }
+
+    @Override
+    public Flight selectById(UUID id) {
+        return null;
+    }
+
+    @Override
+    public Flight checkIfExist(Flight object) {
+        return null;
     }
 }
