@@ -40,4 +40,10 @@ public class InformationUploadController {
         }
         informationUploadService.uploadInformation(file);
     }
+
+    //method for testing cache
+    @PostMapping(value = "/add/number")
+    public void add(@RequestParam("num") Long num) throws IOException {
+        informationUploadService.getListByInputParameters(num);
+    }
 }
