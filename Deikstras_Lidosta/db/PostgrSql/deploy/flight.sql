@@ -7,7 +7,7 @@ BEGIN;
          from_id            UUID,
          to_id              UUID,
          distance           BIGINT,
-         price              NUMERIC(5, 2),
+         price              NUMERIC(10, 2),
          time_of_arrival    TIMESTAMPTZ NOT NULL,
          time_of_departure  TIMESTAMPTZ NOT NULL,
          timezone           TEXT,

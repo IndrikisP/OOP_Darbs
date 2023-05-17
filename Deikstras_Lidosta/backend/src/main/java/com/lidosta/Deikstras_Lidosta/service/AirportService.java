@@ -1,7 +1,6 @@
 package com.lidosta.Deikstras_Lidosta.service;
 
 import com.lidosta.Deikstras_Lidosta.dao.Dao;
-import com.lidosta.Deikstras_Lidosta.model.Airplane;
 import com.lidosta.Deikstras_Lidosta.model.Airport;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -22,12 +21,8 @@ public class AirportService {
         if (tmpAirplane != null) {
             return tmpAirplane;
         }
-        Airport airportDB = new Airport(UUID.randomUUID(),
-                airport.getName(),
-                airport.getCode(),
-                airport.getCityName()
-        );
-        return (Airport) dao.insert(airportDB);
+        airport.setAirportId(UUID.randomUUID());
+        return (Airport) dao.insert(airport);
 
     }
 

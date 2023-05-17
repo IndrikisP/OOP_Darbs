@@ -7,12 +7,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This class is to provide calculation logic.
+ */
 public class Calculation {
     String lidostasTxt = "backend/src/main/resources/lidostas3.txt";
     private int size = 100;
 
-    /// CODE for visual representation of lidostas project.
-/// Input data is in lidostas3.txt file
     int verticleCount;
     String verticles[] = new String[size];
     private Float adj[][] = new Float[size][size];
@@ -140,7 +141,7 @@ public class Calculation {
         //for (Pair<Integer, Float> pair : adj[rootIndex]) {
         for (Float price : adj[rootIndex]) {
             int adjacentVertex = count++;
-            if(price!=null) {
+            if (price != null) {
 
                 if (price <= n) {
                     if (checkNotFound(f, verticles[adjacentVertex])) {
@@ -201,7 +202,7 @@ public class Calculation {
                 break;
             }
         }
-        if(rootIndex!=-1) {
+        if (rootIndex != -1) {
             for (Float value : adj[rootIndex]) {
                 if (value != null) {
                     if (value <= n) {
