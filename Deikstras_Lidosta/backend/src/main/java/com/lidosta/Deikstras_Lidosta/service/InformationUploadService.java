@@ -2,7 +2,6 @@ package com.lidosta.Deikstras_Lidosta.service;
 
 import com.lidosta.Deikstras_Lidosta.processor.parser.ParserTsv;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +12,8 @@ public class InformationUploadService {
     private AirplaneService airplaneService;
     private FlightService flightService;
     private AirportService airportService;
-    private static int number=0;
+    private static int number = 0;
 
-    @Autowired
     public InformationUploadService(AirplaneService airplaneService,
                                     FlightService flightService,
                                     AirportService airportService) {
@@ -29,10 +27,11 @@ public class InformationUploadService {
         parserTsv.parse(file, airportService, airplaneService, flightService);
     }
 
-    @Cacheable(value = "ticketsCache", key = "#inputNum")
-    public int getListByInputParameters(Long  inputNum){
+    //delete if not need
+    @Cacheable(value = "flightInput", key = "#inputNum")
+    public int getListByInputParameters(String inputNum) {
         System.out.println(number);
         number++;
-        return (int) (inputNum+number);
+        return (int) (number);
     }
 }

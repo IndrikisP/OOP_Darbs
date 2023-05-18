@@ -6,8 +6,9 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 @EnableCaching
-@SpringBootApplication//(exclude = {DataSourceAutoConfiguration.class })
+@SpringBootApplication
 public class DeikstrasLidostaApplication {
 
     public static void main(String[] args) {
@@ -22,7 +23,6 @@ public class DeikstrasLidostaApplication {
                 registry.addMapping("/**")
                         .allowedOriginPatterns("http://*")
                         .allowedMethods("PUT", "DELETE", "GET", "POST");
-
             }
         };
     }

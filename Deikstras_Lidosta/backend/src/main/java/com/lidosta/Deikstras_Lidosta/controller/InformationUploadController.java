@@ -1,10 +1,8 @@
 package com.lidosta.Deikstras_Lidosta.controller;
 
-import com.lidosta.Deikstras_Lidosta.model.Flight;
-import com.lidosta.Deikstras_Lidosta.service.FlightService;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.Calculation;
 import com.lidosta.Deikstras_Lidosta.service.InformationUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,13 +15,12 @@ import java.io.OutputStream;
 
 @RestController
 public class InformationUploadController {
-    InformationUploadService informationUploadService;
+    private InformationUploadService informationUploadService;
 
     @Autowired
     public InformationUploadController(InformationUploadService informationUploadService) {
         this.informationUploadService = informationUploadService;
     }
-
 
     @PostMapping(value = "/add/document")
     public void uploadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
@@ -43,7 +40,12 @@ public class InformationUploadController {
 
     //method for testing cache
     @PostMapping(value = "/add/number")
-    public void add(@RequestParam("num") Long num) throws IOException {
+    public void add(@RequestParam("num") String num) throws IOException {
         informationUploadService.getListByInputParameters(num);
+    }
+
+    @PostMapping(value = "/add/show")
+    public void showGraph() {
+        Calculation.getInstance().printGraph();
     }
 }

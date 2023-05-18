@@ -1,70 +1,70 @@
 package com.lidosta.Deikstras_Lidosta.processor.calculator;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Scanner;
+import java.util.UUID;
 
 /**
  * This class is to provide calculation logic.
  */
 public class Calculation {
-    String lidostasTxt = "backend/src/main/resources/lidostas3.txt";
-    private int size = 100;
-
+    private static int size = 1000;
+    private static Calculation calculation = null;
     int verticleCount;
-    String verticles[] = new String[size];
-    private Float adj[][] = new Float[size][size];
+    UUID[] verticles = new UUID[size];
+    private static final List<PriceDistanceInfo>[][] pDInfo = new List[size][size];
 
-    Calculation() {
+    public static Calculation getInstance() {
+        if (calculation == null) {
+            calculation = new Calculation();
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    pDInfo[i][j] = new ArrayList<PriceDistanceInfo>();
+                    System.out.println("pDInfo[i][j] " + pDInfo[i][j]);
+                }
+            }
+        }
 
+        return calculation;
     }
 
-    public Float[][] getAdj() {
-        return adj;
-    }
-
-    boolean addVerticle(String v) {
+    boolean addAirport(UUID airportId) {
         for (int i = 0; i < verticleCount; i++) {
-            if (verticles[i].equals(v)) {
+            if (verticles[i].equals(airportId)) {
                 return false;
             }
         }
         if (verticleCount == size) {
             return false;
         }
-        verticles[verticleCount++] = v;
+        verticles[verticleCount++] = airportId;
         return true;
     }
 
-    // To add an edge
-    boolean addDirectedEdge(String u,
-                            String v, int wt) {
+    boolean addAirportEdge(UUID airportFromId, UUID airportToId, PriceDistanceInfo priceDistanceInfo) {
         int v1pos = -1, v2pos = -1;
         for (int i = 0; i < verticleCount; i++) {
-            if (u.equals(verticles[i]))
+            if (airportFromId.equals(verticles[i]))
                 v1pos = i;
-            if (v.equals(verticles[i]))
+            if (airportToId.equals(verticles[i]))
                 v2pos = i;
         }
         if (v1pos != -1 && v2pos != -1) {
-            adj[v1pos][v2pos] = Float.valueOf(wt);
+            pDInfo[v1pos][v2pos].add(priceDistanceInfo);
             return true;
         }
         return false;
     }
 
     // Print adjacency list representation ot graph
-    void printGraph(Float adj[][], int V) {
-        String nosaukums = null;
-        for (int u = 0; u < V - 1; u++) {
+    public void printGraph() {
+        UUID nosaukums = null;
+        for (int u = 0; u < size - 1; u++) {
             StringBuilder sb = new StringBuilder();
-            boolean printout = false;
             sb.append("No lidostas ").append(verticles[u]).append(" var nokļūt uz:\n");
-            for (int j = 0; j < V - 1; j++) {
-
+            for (int j = 0; j < size - 1; j++) {
                 for (int i = 0; i < verticleCount - 1; i++) {
                     if (i == j) {
                         nosaukums = verticles[i];
@@ -72,39 +72,32 @@ public class Calculation {
                     } else
                         nosaukums = verticles[i];
                 }
-                if (adj[u][j] != null) {
-                    sb.append("\tlidostu ").append(nosaukums).append(" par ").append(adj[u][j]).append(" EUR\n");
+                if (nosaukums == null) {
+                    return;
+                }
+                if (!pDInfo[u][j].isEmpty()) {
+                    sb.append("\tlidostu ").append(nosaukums).append(" par\n");
+                    for (PriceDistanceInfo info : pDInfo[u][j]) {
+                        sb.append("id: ")
+                                .append(info.getFlightId())
+                                .append(" | ")
+                                .append(info.getPrice())
+                                .append(" EUR ")
+                                .append(info.getDistance())
+                                .append(" KM\n");
+                    }
                     System.out.println(sb);
+                    sb = new StringBuilder();
                 }
             }
-
         }
     }
 
+    public void addRecordToGraph(UUID airportFrom, UUID airportTo, PriceDistanceInfo info) {
+        addAirport(airportFrom);
+        addAirport(airportTo);
+        addAirportEdge(airportFrom, airportTo, info);
 
-    // Create graph
-    public int createGraph() throws FileNotFoundException {
-        //String lidostasTxt = "C:\\SVN\\OOP_Darbs\\Deikstras_Lidosta\\src\\main\\resources\\lidostas3.txt";
-
-        String lidosta_no, lidosta_uz;
-        int reisa_id;
-        int biletes_cena;
-        File file = new File(lidostasTxt);
-        Scanner scanner = new Scanner(file);
-
-        while (scanner.hasNext()) {
-            reisa_id = scanner.nextInt();
-            lidosta_no = scanner.next();
-            lidosta_uz = scanner.next();
-            biletes_cena = scanner.nextInt();
-
-            addVerticle(lidosta_no);
-            addVerticle(lidosta_uz);
-            addDirectedEdge(lidosta_no, lidosta_uz, biletes_cena);
-        }
-
-        scanner.close();
-        return 0;
     }
 
     // No real usage for task
@@ -128,38 +121,38 @@ public class Calculation {
     }
 
     // Kur var nokļūt no lidostas X ja ir N naudas
-    public int XNquery(String root, float n, int money, List<String> f) {
-        int rootIndex = -1;
-        for (int i = 0; i < verticleCount; i++) {
-            if (verticles[i].equals(root)) {
-                rootIndex = i;
-                break;
-            }
-        }
-        f.add(root);
-        int count = 0;
-        //for (Pair<Integer, Float> pair : adj[rootIndex]) {
-        for (Float price : adj[rootIndex]) {
-            int adjacentVertex = count++;
-            if (price != null) {
-
-                if (price <= n) {
-                    if (checkNotFound(f, verticles[adjacentVertex])) {
-                        money += price;
-                        System.out.print(f.get(0) + "->" + verticles[adjacentVertex] + " Price: " + money + " ");
-                        if (verticles[rootIndex].equals(f.get(0))) {
-                            System.out.println("Tiešais");
-                        } else {
-                            System.out.println();
-                        }
-                        XNquery(verticles[adjacentVertex], n - money, money, f);
-                        money -= price;
-                    }
-                }
-            }
-        }
-        return money;
-    }
+//    public int XNquery(String root, float n, int money, List<String> f) {
+//        int rootIndex = -1;
+//        for (int i = 0; i < verticleCount; i++) {
+//            if (verticles[i].equals(root)) {
+//                rootIndex = i;
+//                break;
+//            }
+//        }
+//        f.add(root);
+//        int count = 0;
+//        //for (Pair<Integer, Float> pair : adj[rootIndex]) {
+//        for (Float price : adj[rootIndex]) {
+//            int adjacentVertex = count++;
+//            if (price != null) {
+//
+//                if (price <= n) {
+//                    if (checkNotFound(f, verticles[adjacentVertex])) {
+//                        money += price;
+//                        System.out.print(f.get(0) + "->" + verticles[adjacentVertex] + " Price: " + money + " ");
+//                        if (verticles[rootIndex].equals(f.get(0))) {
+//                            System.out.println("Tiešais");
+//                        } else {
+//                            System.out.println();
+//                        }
+//                        XNquery(verticles[adjacentVertex], n - money, money, f);
+//                        money -= price;
+//                    }
+//                }
+//            }
+//        }
+//        return money;
+//    }
 
     // Prints out list
     public void showList(List<String> list) {
@@ -187,64 +180,64 @@ public class Calculation {
                 indexLidosta_uz = i;
             }
         }
-        return adj[indexLidosta_no][indexLidosta_uz] != null;
+        return pDInfo != null;
     }
 
 
     // No lidostas X, atgriezites lidostā X, un iztērējot ne vairāk, kā N naudas
-    public int XXNquery(String root, int n, int money, List<String> f) {
-        boolean noLoop = true;
-        int rootIndex = -1;
-        f.add(root);
-        for (int i = 0; i < verticleCount; i++) {
-            if (verticles[i].equals(root)) {
-                rootIndex = i;
-                break;
-            }
-        }
-        if (rootIndex != -1) {
-            for (Float value : adj[rootIndex]) {
-                if (value != null) {
-                    if (value <= n) {
-                        if (verticles[rootIndex].equals(f.get(0))) {
-                            f.add(verticles[rootIndex]);
-                            showList(f);
-                            f.remove(f.size() - 1);
-                            money -= value;
-                            break;
-                        }
-                        money += value;
-                        XXNquery(verticles[rootIndex], n - money, money, f);
-                        money -= value;
-                    }
-                }
-            }
-        }
-        return money;
-    }
+//    public int XXNquery(String root, int n, int money, List<String> f) {
+//        boolean noLoop = true;
+//        int rootIndex = -1;
+//        f.add(root);
+//        for (int i = 0; i < verticleCount; i++) {
+//            if (verticles[i].equals(root)) {
+//                rootIndex = i;
+//                break;
+//            }
+//        }
+//        if (rootIndex != -1) {
+//            for (List<PriceDistanceInfo> value : pDInfo[rootIndex]) {
+//                if (value != null) {
+//                    if (value <= n) {
+//                        if (verticles[rootIndex].equals(f.get(0))) {
+//                            f.add(verticles[rootIndex]);
+//                            showList(f);
+//                            f.remove(f.size() - 1);
+//                            money -= value;
+//                            break;
+//                        }
+//                        money += value;
+//                        XXNquery(verticles[rootIndex], n - money, money, f);
+//                        money -= value;
+//                    }
+//                }
+//            }
+//        }
+//        return money;
+//    }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         Calculation c = new Calculation();
         long tic = System.currentTimeMillis();
 
-        c.createGraph();
-        c.printGraph(c.getAdj(), 100);
-
-        List<String> am = new ArrayList<>();
-        //c.addReisies();
-
-        System.out.println("--------XNquery------");
-
-        c.XNquery("Tallinn/TLL", 50.00f, 0, am); // prints answer
-        am = new ArrayList<>();
-
-        c.XNquery("Stockholm/ARN", 500.00f, 0, am);
-        System.out.println("--------XXNquery--------");
-
-        c.XXNquery("Tallinn/TLL", 5000000, 0, am);    // prints all ways that is possible for N money
-
-        c.XXNquery("ZAG", 10000, 0, am);
+//        c.createGraph();
+//        c.printGraph(c.getAdj(), 100);
+//
+//        List<String> am = new ArrayList<>();
+//        //c.addReisies();
+//
+//        System.out.println("--------XNquery------");
+//
+//        c.XNquery("Tallinn/TLL", 50.00f, 0, am); // prints answer
+//        am = new ArrayList<>();
+//
+//        c.XNquery("Stockholm/ARN", 500.00f, 0, am);
+//        System.out.println("--------XXNquery--------");
+//
+//        c.XXNquery("Tallinn/TLL", 5000000, 0, am);    // prints all ways that is possible for N money
+//
+//        c.XXNquery("ZAG", 10000, 0, am);
         // print nothing, because can't make x->x fly
         System.out.println("--------XYquery--------");
 

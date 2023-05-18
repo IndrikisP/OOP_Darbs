@@ -1,0 +1,50 @@
+Boeing 747	747-400	416	LAX	Los Angeles	Los Angeles International Airport	JFK	New York	John F. Kennedy International Airport	6400	1000	2023-06-22	2023-06-23	GMT-8	Airline X
+Airbus A320	A320neo	180	JFK	New York	John F. Kennedy International Airport	LAX	Los Angeles	Los Angeles International Airport	2800	500	2023-06-22	2023-06-23	GMT-5	Airline Y
+Boeing 787	787-9	242	LHR	London	Heathrow Airport	CDG	Paris	Charles de Gaulle Airport	5600	800	2023-06-22	2023-06-23	GMT+0	Airline Z
+Embraer E175	E175-E2	76	ORD	Chicago	O'Hare International Airport	LAS	Las Vegas	McCarran International Airport	1500	300	2023-06-22	2023-06-23	GMT-6	Airline A
+Airbus A380	A380-800	853	CDG	Paris	Charles de Gaulle Airport	LHR	London	Heathrow Airport	6500	1200	2023-06-22	2023-06-23	GMT+1	Airline B
+Boeing 737	737-800	189	SFO	San Francisco	San Francisco International Airport	SEA	Seattle	Seattle-Tacoma International Airport	680	150	2023-06-22	2023-06-23	GMT-7	Airline C
+Airbus A330	A330-300	296	FRA	Frankfurt	Frankfurt Airport	DXB	Dubai	Dubai International Airport	5500	1100	2023-06-22	2023-06-23	GMT+2	Airline D
+Embraer E190	E190-E2	100	BOS	Boston	Logan International Airport	DCA	Washington	Reagan National Airport	400	200	2023-06-22	2023-06-23	GMT-4	Airline F
+Airbus A321	A321neo	200	MCO	Orlando	Orlando International Airport	MIA	Miami	Miami International Airport	200	100	2023-06-22	2023-06-23	GMT-4	Airline G
+Boeing 737	737-700	160	ATL	Atlanta	Hartsfield-Jackson Atlanta International Airport	DFW	Dallas	Dallas/Fort Worth International Airport	800	250	2023-06-22	2023-06-23	GMT-5	Airline H
+Airbus A319	A319neo	124	YYZ	Toronto	Toronto Pearson International Airport	YUL	Montreal	Montréal-Pierre Elliott Trudeau International Airport	500	180	2023-06-22	2023-06-23	GMT-4	Airline I
+Boeing 767	767-300	245	SYD	Sydney	Sydney Airport	MEL	Melbourne	Melbourne Airport	700	300	2023-06-22	2023-06-23	GMT+10	Airline J
+Embraer E145	E145-E1	50	DEN	Denver	Denver International Airport	PHX	Phoenix	Phoenix Sky Harbor International Airport	800	200	2023-06-22	2023-06-23	GMT-6	Airline K
+Boeing 747	747-400	416	LAX	Los Angeles	Los Angeles International Airport	JFK	New York	John F. Kennedy International Airport	6400	1000	2023-06-22	2023-06-23	GMT-8	Airline X
+Airbus A320	A320neo	180	JFK	New York	John F. Kennedy International Airport	LAX	Los Angeles	Los Angeles International Airport	2800	500	2023-06-22	2023-06-23	GMT-5	Airline Y
+Airbus A330	A330-300	250	HND	Tokyo	Tokyo Haneda Airport	SFO	San Francisco	San Francisco International Airport	5600	1200	2023-06-23	2023-06-24	GMT+9	Airline Z
+Boeing 787	Dreamliner	240	CDG	Paris	Paris Charles de Gaulle Airport	MIA	Miami	Miami International Airport	4700	900	2023-06-23	2023-06-24	GMT+2	Airline W
+Airbus A380	A380-800	550	SIN	Singapore	Singapore Changi Airport	LHR	London	London Heathrow Airport	6770	1500	2023-06-24	2023-06-25	GMT+8	Airline V
+Boeing 777	777-300ER	350	SYD	Sydney	Sydney Airport	DUB	Dubai	Dubai International Airport	8190	2000	2023-06-24	2023-06-25	GMT+10	Airline U
+Airbus A320	A320neo	180	FRA	Frankfurt	Frankfurt am Main Airport	MAD	Madrid	Madrid Barajas Airport	850	400	2023-06-25	2023-06-26	GMT+2	Airline T
+Boeing 737	737-800	160	ORD	Chicago	Chicago O'Hare International Airport	DFW	Dallas	Dallas/Fort Worth International Airport	800	300	2023-06-25	2023-06-26	GMT-6	Airline S
+Airbus A350	A350-900	300	HKG	Hong Kong	Hong Kong International Airport	BKK	Bangkok	Suvarnabhumi Airport	1100	600	2023-06-26	2023-06-27	GMT+8	Airline R
+Boeing 747	747-400	416	SFO	San Francisco	San Francisco International Airport	LAX	Los Angeles	Los Angeles International Airport	340	200	2023-06-26	2023-06-27	GMT-7	Airline Q
+Airbus A320	A320neo	180	LHR	London	London Heathrow Airport	AMS	Amsterdam	Amsterdam Airport Schiphol	230	150	2023-06-27	2023-06-28	GMT+1	Airline P
+Boeing 787	Dreamliner	240	JFK	New York	John F. Kennedy International Airport	ICN	Seoul	Incheon International Airport	6210	1100	2023-06-27	2023-06-28	GMT-4	Airline O
+Boeing 747	747-400	416	LAX	Los Angeles	Los Angeles International Airport	JFK	New York	John F. Kennedy International Airport	6400	1000	2023-06-22	2023-06-23	GMT-8	Airline X
+Airbus A320	A320neo	180	JFK	New York	John F. Kennedy International Airport	LAX	Los Angeles	Los Angeles International Airport	2800	500	2023-06-22	2023-06-23	GMT-5	Airline Y
+Boeing 787	787-9	242	LHR	London	Heathrow Airport	CDG	Paris	Charles de Gaulle Airport	5600	800	2023-06-22	2023-06-23	GMT+0	Airline Z
+Embraer E175	E175-E2	76	ORD	Chicago	O'Hare International Airport	LAS	Las Vegas	McCarran International Airport	1500	300	2023-06-22	2023-06-23	GMT-6	Airline A
+Airbus A380	A380-800	853	CDG	Paris	Charles de Gaulle Airport	LHR	London	Heathrow Airport	6500	1200	2023-06-22	2023-06-23	GMT+1	Airline B
+Boeing 737	737-800	189	SFO	San Francisco	San Francisco International Airport	SEA	Seattle	Seattle-Tacoma International Airport	680	150	2023-06-22	2023-06-23	GMT-7	Airline C
+Airbus A330	A330-300	296	FRA	Frankfurt	Frankfurt Airport	DXB	Dubai	Dubai International Airport	5500	1100	2023-06-22	2023-06-23	GMT+2	Airline D
+Embraer E190	E190-E2	100	BOS	Boston	Logan International Airport	DCA	Washington	Reagan National Airport	400	200	2023-06-22	2023-06-23	GMT-4	Airline F
+Airbus A321	A321neo	200	MCO	Orlando	Orlando International Airport	MIA	Miami	Miami International Airport	200	100	2023-06-22	2023-06-23	GMT-4	Airline G
+Boeing 737	737-700	160	ATL	Atlanta	Hartsfield-Jackson Atlanta International Airport	DFW	Dallas	Dallas/Fort Worth International Airport	800	250	2023-06-22	2023-06-23	GMT-5	Airline H
+Airbus A319	A319neo	124	YYZ	Toronto	Toronto Pearson International Airport	YUL	Montreal	Montréal-Pierre Elliott Trudeau International Airport	500	180	2023-06-22	2023-06-23	GMT-4	Airline I
+Boeing 767	767-300	245	SYD	Sydney	Sydney Airport	MEL	Melbourne	Melbourne Airport	700	300	2023-06-22	2023-06-23	GMT+10	Airline J
+Embraer E145	E145-E1	50	DEN	Denver	Denver International Airport	PHX	Phoenix	Phoenix Sky Harbor International Airport	800	200	2023-06-22	2023-06-23	GMT-6	Airline K
+Boeing 747	747-400	416	LAX	Los Angeles	Los Angeles International Airport	JFK	New York	John F. Kennedy International Airport	6400	1000	2023-06-22	2023-06-23	GMT-8	Airline X
+Airbus A320	A320neo	180	JFK	New York	John F. Kennedy International Airport	LAX	Los Angeles	Los Angeles International Airport	2800	500	2023-06-22	2023-06-23	GMT-5	Airline Y
+Airbus A330	A330-300	250	HND	Tokyo	Tokyo Haneda Airport	SFO	San Francisco	San Francisco International Airport	5600	1200	2023-06-23	2023-06-24	GMT+9	Airline Z
+Boeing 787	Dreamliner	240	CDG	Paris	Paris Charles de Gaulle Airport	MIA	Miami	Miami International Airport	4700	900	2023-06-23	2023-06-24	GMT+2	Airline W
+Airbus A380	A380-800	550	SIN	Singapore	Singapore Changi Airport	LHR	London	London Heathrow Airport	6770	1500	2023-06-24	2023-06-25	GMT+8	Airline V
+Boeing 777	777-300ER	350	SYD	Sydney	Sydney Airport	DUB	Dubai	Dubai International Airport	8190	2000	2023-06-24	2023-06-25	GMT+10	Airline U
+Airbus A320	A320neo	180	FRA	Frankfurt	Frankfurt am Main Airport	MAD	Madrid	Madrid Barajas Airport	850	400	2023-06-25	2023-06-26	GMT+2	Airline T
+Boeing 737	737-800	160	ORD	Chicago	Chicago O'Hare International Airport	DFW	Dallas	Dallas/Fort Worth International Airport	800	300	2023-06-25	2023-06-26	GMT-6	Airline S
+Airbus A350	A350-900	300	HKG	Hong Kong	Hong Kong International Airport	BKK	Bangkok	Suvarnabhumi Airport	1100	600	2023-06-26	2023-06-27	GMT+8	Airline R
+Boeing 747	747-400	416	SFO	San Francisco	San Francisco International Airport	LAX	Los Angeles	Los Angeles International Airport	340	200	2023-06-26	2023-06-27	GMT-7	Airline Q
+Airbus A320	A320neo	180	LHR	London	London Heathrow Airport	AMS	Amsterdam	Amsterdam Airport Schiphol	230	150	2023-06-27	2023-06-28	GMT+1	Airline P
+Boeing 787	Dreamliner	240	JFK	New York	John F. Kennedy International Airport	ICN	Seoul	Incheon International Airport	6210	1100	2023-06-27	2023-06-28	GMT-4	Airline O

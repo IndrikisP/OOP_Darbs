@@ -3,6 +3,8 @@ package com.lidosta.Deikstras_Lidosta.processor.parser;
 import com.lidosta.Deikstras_Lidosta.model.Airplane;
 import com.lidosta.Deikstras_Lidosta.model.Airport;
 import com.lidosta.Deikstras_Lidosta.model.Flight;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.Calculation;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.PriceDistanceInfo;
 import com.lidosta.Deikstras_Lidosta.service.AirplaneService;
 import com.lidosta.Deikstras_Lidosta.service.AirportService;
 import com.lidosta.Deikstras_Lidosta.service.FlightService;
@@ -18,14 +20,16 @@ import java.util.List;
 /**
  * This class is to parse tsv document and put data into DB.
  */
+
 public class ParserTsv {
-    public MultiClassRepository parse(File file,
-                                      AirportService airportService,
-                                      AirplaneService airplaneService,
-                                      FlightService flightService) {
-        final List<Airplane> airplanes = new ArrayList<>();
-        final List<Flight> flights = new ArrayList<>();
-        final List<Airport> airports = new ArrayList<>();
+
+    static int rowCount = 0;
+
+    public void parse(File file,
+                      AirportService airportService,
+                      AirplaneService airplaneService,
+                      FlightService flightService) {
+        Calculation calculation = Calculation.getInstance();
         //1 airplanetype,
         //2 airplaneModel
         //3 airplanecapacity,
@@ -42,9 +46,9 @@ public class ParserTsv {
         //11 flightprice,
         //12 flighttime_of_arrival,
         //13 flighttime_of_departure,
-        //14 flighttimezone,flightcompany
+        //14 flighttimezone,
+        //15 flightcompany
         final String pattern = "yyyy-mm-dd";
-
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
         try (BufferedReader TSVReader = new BufferedReader(new FileReader(file))) {
             String line = null;
@@ -56,34 +60,35 @@ public class ParserTsv {
                 Date dateArrival = dateFormat.parse(row[11]);
                 Date dateDeparture = dateFormat.parse(row[12]);
                 float price = Float.parseFloat(row[10]);
-                Flight flight = getFlight(new Flight(tmpAirportFrom.getAirportId(),
+                int distance = Integer.parseInt(row[9]);
+                Flight tmpFlight = getFlight(new Flight(tmpAirportFrom.getAirportId(),
                         tmpAirportTo.getAirportId(),
-                        Integer.parseInt(row[9]),
+                        distance,
                         price,
                         dateArrival, dateDeparture,
                         row[13],
                         tmpAirplane.getAirplaneId(),
                         row[14]), flightService);
-                airplanes.add(tmpAirplane);
-                airports.add(tmpAirportTo);
-                airports.add(tmpAirportFrom);
-                flights.add(flight);
+                PriceDistanceInfo info = new PriceDistanceInfo(tmpFlight.getFlightId(), price, distance);
+                calculation.addRecordToGraph(tmpAirportFrom.getAirportId(), tmpAirportTo.getAirportId(), info);
+                rowCount++;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return new MultiClassRepository(airplanes, flights, airports);
+        System.out.println("Sum of not unique row count: " + rowCount);
     }
 
-    private Airplane getPlane(Airplane airplane, AirplaneService service) {
-        return service.addAirplane(airplane);
+    public Airplane getPlane(Airplane airplane, AirplaneService airplaneService) {
+        return airplaneService.addAirplane(airplane);
     }
 
-    private Airport getAirport(Airport airport, AirportService service) {
-        return service.addAirport(airport);
+    public Airport getAirport(Airport airport, AirportService airportService) {
+        return airportService.addAirport(airport);
     }
 
-    private Flight getFlight(Flight flight, FlightService service) {
-        return service.addFlight(flight);
+    public Flight getFlight(Flight flight, FlightService flightService) {
+        return flightService.addFlight(flight);
     }
+
 }

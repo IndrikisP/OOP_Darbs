@@ -70,6 +70,7 @@ public class FlightAccessService implements Dao<Flight> {
 
     @Override
     public Flight checkIfExist(Flight object) {
+        //TODO Implement method
         return null;
     }
 }

@@ -1,16 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
-         updateCheck="false">
+         updateCheck="false"
+         monitoring="autodetect"
+         dynamicConfig="true"
+         diskPersistent="true"
+         shared="true">
 
     <cache name="ticketsCache"
            maxElementsInMemory="100"
            eternal="false"
            overflowToDisk="false"
-           timeToLiveSeconds="300"
+           timeToLiveSeconds="60"
+           timeToIdleSeconds="10"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+    <cache name="flightInput"
+           maxElementsInMemory="100"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="60"
+           timeToIdleSeconds="10"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+    <cache name="airplaneInput"
+           maxElementsInMemory="100"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="60"
+           timeToIdleSeconds="10"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+    <cache name="airportInput"
+           maxElementsInMemory="100"
+           eternal="false"
+           overflowToDisk="false"
+           timeToLiveSeconds="60"
            timeToIdleSeconds="0"
            memoryStoreEvictionPolicy="LFU"
            transactionalMode="off">
     </cache>
-
 </ehcache>
