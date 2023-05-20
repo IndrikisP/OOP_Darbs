@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -24,35 +25,102 @@ public class DijkstraAlgorithmTest {
 
     @Before
     public void setUp() {
-        //DijkstraAlgorithm algorithm = new DijkstraAlgorithm();
-        distances.add(0);
-        distances.add(1);
-        distances.add(5);
-        distances.add(1);
-        distances.add(0);
-        distances.add(2);
-        distances.add(5);
-        distances.add(2);
-        distances.add(0);
-
-        testDistances.add(0);
-        testDistances.add(1);
-        testDistances.add(3);
-        testDistances.add(1);
-        testDistances.add(0);
-        testDistances.add(2);
-        testDistances.add(3);
-        testDistances.add(2);
-        testDistances.add(0);
+        distances = new ArrayList<>();
+        testDistances = new ArrayList<>();
+        counter = 0;
+        testCounter = 0;
     }
-
     @Test
     public void scenario1() {
-        List<PriceDistanceInfo>[][] tmpActual = new List[3][3];
-        List<PriceDistanceInfo>[][] expected = new List[3][3];
+        int size = 3;
+        distances.add(0);
+        distances.add(1);
+        distances.add(5);
+        distances.add(1);
+        distances.add(0);
+        distances.add(2);
+        distances.add(5);
+        distances.add(2);
+        distances.add(0);
+
+        testDistances.add(0);
+        testDistances.add(1);
+        testDistances.add(3);
+        testDistances.add(1);
+        testDistances.add(0);
+        testDistances.add(2);
+        testDistances.add(3);
+        testDistances.add(2);
+        testDistances.add(0);
+        List<PriceDistanceInfo>[][] tmpActual = new List[size][size];
+        List<PriceDistanceInfo>[][] expected = new List[size][size];
 
         beforeAction(tmpActual, expected);
-       // afterAction(pDInfoPrice);
+        List<PriceDistanceInfo>[][] actual = executeScenario(tmpActual);
+        afterAction(expected, actual);
+
+    }
+    @Test
+    public void scenario2() {
+        int size = 5;
+        distances.add(0);
+        distances.add(10);
+        distances.add(5);
+        distances.add(7);
+        distances.add(1);
+        distances.add(10);
+        distances.add(0);
+        distances.add(2);
+        distances.add(3);
+        distances.add(8);
+
+        distances.add(5);
+        distances.add(2);
+        distances.add(0);
+        distances.add(2);
+        distances.add(20);
+        distances.add(7);
+        distances.add(3);
+        distances.add(2);
+        distances.add(0);
+        distances.add(4);
+
+        distances.add(1);
+        distances.add(8);
+        distances.add(20);
+        distances.add(4);
+        distances.add(0);
+
+        testDistances.add(0);
+        testDistances.add(7);
+        testDistances.add(5);
+        testDistances.add(5);
+        testDistances.add(1);
+        testDistances.add(7);
+        testDistances.add(0);
+        testDistances.add(2);
+        testDistances.add(3);
+        testDistances.add(7);
+        testDistances.add(5);
+        testDistances.add(2);
+        testDistances.add(0);
+        testDistances.add(2);
+        testDistances.add(6);
+        testDistances.add(5);
+        testDistances.add(3);
+        testDistances.add(2);
+        testDistances.add(0);
+        testDistances.add(4);
+        testDistances.add(1);
+        testDistances.add(7);
+        testDistances.add(6);
+        testDistances.add(4);
+        testDistances.add(0);
+
+        List<PriceDistanceInfo>[][] tmpActual = new List[size][size];
+        List<PriceDistanceInfo>[][] expected = new List[size][size];
+
+        beforeAction(tmpActual, expected);
         List<PriceDistanceInfo>[][] actual = executeScenario(tmpActual);
         afterAction(expected, actual);
 
@@ -61,7 +129,7 @@ public class DijkstraAlgorithmTest {
     public List<PriceDistanceInfo>[][] executeScenario(List<PriceDistanceInfo>[][] pDInfoPrice) {
         DijkstraAlgorithm algorithm = new DijkstraAlgorithm();
         List<PriceDistanceInfo>[][] pDInfoPricen = pDInfoPrice;
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < pDInfoPrice.length; i++) {
             pDInfoPricen = algorithm.dijkstra(pDInfoPricen, i);
         }
         return pDInfoPricen;
@@ -79,9 +147,9 @@ public class DijkstraAlgorithmTest {
     }
 
     void afterAction(List<PriceDistanceInfo>[][] expected, List<PriceDistanceInfo>[][] actual) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                Assert.assertEquals(expected[i][j].get(0).getDistance(),actual[i][j].get(0).getDistance());
+        for (int i = 0; i < expected.length; i++) {
+            for (int j = 0; j < expected.length; j++) {
+                Assert.assertEquals(expected[i][j].get(0).getDistance(), actual[i][j].get(0).getDistance());
                 System.out.println("pDInfonew[" + i + "][" + j + "]: " + actual[i][j]);
             }
         }

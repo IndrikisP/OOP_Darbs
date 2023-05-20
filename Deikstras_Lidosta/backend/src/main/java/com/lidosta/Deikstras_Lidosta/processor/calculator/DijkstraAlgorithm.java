@@ -74,10 +74,11 @@ public class DijkstraAlgorithm {
 
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
-                if(i==s) {
+                if (i == s) {
                     res[i][j] = new ArrayList<>();
                     res[i][j].add(exe[i][j].get(0));
                     res[i][j].get(0).setDistance(dist[j]);
+                    res[i][j].get(0).setPath(getPath(j,exe));
                 } else {
                     res[i][j] = new ArrayList<>();
                     res[i][j].add(exe[i][j].get(0));
@@ -86,5 +87,15 @@ public class DijkstraAlgorithm {
         }
 
         return res;
+    }
+
+    private List<UUID> getPath(int j,List<PriceDistanceInfo>[][] exe) {
+        List<UUID> path = new ArrayList<>();
+        int curr = j;
+        while (curr != -1) {
+            path.add(0, exe[curr][curr].get(0).getFlightId());
+            curr = pred[curr];
+        }
+        return path;
     }
 }
