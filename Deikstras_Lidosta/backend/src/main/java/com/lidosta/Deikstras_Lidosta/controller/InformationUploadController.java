@@ -1,7 +1,7 @@
 package com.lidosta.Deikstras_Lidosta.controller;
 
 import com.lidosta.Deikstras_Lidosta.processor.calculator.Calculation;
-import com.lidosta.Deikstras_Lidosta.service.InformationUploadService;
+import com.lidosta.Deikstras_Lidosta.service.InformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,11 +15,11 @@ import java.io.OutputStream;
 
 @RestController
 public class InformationUploadController {
-    private InformationUploadService informationUploadService;
+    private InformationService informationService;
 
     @Autowired
-    public InformationUploadController(InformationUploadService informationUploadService) {
-        this.informationUploadService = informationUploadService;
+    public InformationUploadController(InformationService informationService) {
+        this.informationService = informationService;
     }
 
     @PostMapping(value = "/add/document")
@@ -35,13 +35,13 @@ public class InformationUploadController {
         } catch (IOException e) {
             throw new IOException("Failed to save file: " + originalFilename, e);
         }
-        informationUploadService.uploadInformation(file);
+        informationService.uploadInformation(file);
     }
 
     //method for testing cache
     @PostMapping(value = "/add/number")
     public void add(@RequestParam("num") String num) throws IOException {
-        informationUploadService.getListByInputParameters(num);
+        informationService.getListByInputParameters(num);
     }
 
     @PostMapping(value = "/add/show")

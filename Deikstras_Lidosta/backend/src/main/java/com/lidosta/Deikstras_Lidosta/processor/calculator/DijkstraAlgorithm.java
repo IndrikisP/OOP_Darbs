@@ -7,7 +7,6 @@ import java.util.UUID;
 public class DijkstraAlgorithm {
 
     private static int INF = Integer.MAX_VALUE / 2;
-
     private int n; // количество вершин в орграфе
     private ArrayList<Integer>[] adj; // список смежности
     private ArrayList<Integer>[] weight; // вес ребра в орграфе
@@ -76,12 +75,16 @@ public class DijkstraAlgorithm {
             for (int j = 0; j < n; ++j) {
                 if (i == s) {
                     res[i][j] = new ArrayList<>();
-                    res[i][j].add(exe[i][j].get(0));
-                    res[i][j].get(0).setDistance(dist[j]);
-                    res[i][j].get(0).setPath(getPath(j,exe));
+                    if(exe[i][j].size()>0) {
+                        res[i][j].add(exe[i][j].get(0));
+                        res[i][j].get(0).setDistance(dist[j]);
+                        res[i][j].get(0).setPath(getPath(j, exe));
+                    }
                 } else {
                     res[i][j] = new ArrayList<>();
-                    res[i][j].add(exe[i][j].get(0));
+                    if(exe[i][j].size()>0) {
+                        res[i][j].add(exe[i][j].get(0));
+                    }
                 }
             }
         }
@@ -93,7 +96,9 @@ public class DijkstraAlgorithm {
         List<UUID> path = new ArrayList<>();
         int curr = j;
         while (curr != -1) {
-            path.add(0, exe[curr][curr].get(0).getFlightId());
+            if(exe[curr][curr].size()>0) {
+                path.add(0, exe[curr][curr].get(0).getFlightId());
+            }
             curr = pred[curr];
         }
         return path;

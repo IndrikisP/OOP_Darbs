@@ -1,15 +1,10 @@
 package com.lidosta.Deikstras_Lidosta.dao;
 
 import com.lidosta.Deikstras_Lidosta.model.Airplane;
-import com.lidosta.Deikstras_Lidosta.model.Airport;
-import com.lidosta.Deikstras_Lidosta.model.Flight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -66,6 +61,11 @@ public class AirplaneAccessService implements Dao<Airplane> {
         } else {
             return results.get(0);
         }
+    }
+
+    @Override
+    public List<Airplane> selectByIds(List<UUID> t) {
+        return null;
     }
 
 }

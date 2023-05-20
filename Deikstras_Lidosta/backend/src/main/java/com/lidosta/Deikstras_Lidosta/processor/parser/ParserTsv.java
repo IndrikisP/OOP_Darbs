@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * This class is to parse tsv document and put data into DB.
+ * uses calculation class to create graph
  */
 
 public class ParserTsv {
@@ -76,6 +77,7 @@ public class ParserTsv {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
         System.out.println("Sum of not unique row count: " + rowCount);
     }
 

@@ -1,5 +1,7 @@
 package com.lidosta.Deikstras_Lidosta.processor.calculator;
 
+import org.springframework.stereotype.Service;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,9 +11,11 @@ import java.util.UUID;
 /**
  * This class is to provide calculation logic.
  */
+@Service
 public class Calculation {
     private static int size = 1000;
     private static Calculation calculation = null;
+    private static List<PriceDistanceInfo>[][] shortestDistance = null;
     int verticleCount;
     UUID[] verticles = new UUID[size];
     private static final List<PriceDistanceInfo>[][] pDInfo = new List[size][size];
@@ -53,6 +57,9 @@ public class Calculation {
         }
         if (v1pos != -1 && v2pos != -1) {
             pDInfo[v1pos][v2pos].add(priceDistanceInfo);
+            pDInfo[v1pos][v1pos].add(new PriceDistanceInfo(priceDistanceInfo.getFlightId(),0f,0, null));
+            pDInfo[v2pos][v2pos].add(new PriceDistanceInfo(priceDistanceInfo.getFlightId(),0f,0, null));
+
             return true;
         }
         return false;
@@ -97,7 +104,28 @@ public class Calculation {
         addAirport(airportFrom);
         addAirport(airportTo);
         addAirportEdge(airportFrom, airportTo, info);
+    }
 
+    public void calculateShortestPathGraph() {
+        DijkstraAlgorithm algorithm = new DijkstraAlgorithm();
+        shortestDistance = pDInfo;
+        for (int i = 0; i < pDInfo.length; i++) {
+            shortestDistance = algorithm.dijkstra(shortestDistance, i);
+        }
+    }
+
+    public List<UUID> getShortestDistanceFromTo(UUID from, UUID to) {
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < verticleCount; i++) {
+            if (verticles[i].equals(from)) {
+                x = i;
+            }
+            if (verticles[i].equals(to)) {
+                y = i;
+            }
+        }
+        return shortestDistance[x][y].size()>0 ? shortestDistance[x][y].get(0).getPath() : null;
     }
 
     // No real usage for task
