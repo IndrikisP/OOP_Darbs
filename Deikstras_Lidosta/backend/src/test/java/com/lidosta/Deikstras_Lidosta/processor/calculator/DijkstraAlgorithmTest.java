@@ -60,7 +60,11 @@ public class DijkstraAlgorithmTest {
 
     public List<PriceDistanceInfo>[][] executeScenario(List<PriceDistanceInfo>[][] pDInfoPrice) {
         DijkstraAlgorithm algorithm = new DijkstraAlgorithm();
-        return algorithm.dijkstra(pDInfoPrice);
+        List<PriceDistanceInfo>[][] pDInfoPricen = pDInfoPrice;
+        for(int i = 0; i < 3; i++) {
+            pDInfoPricen = algorithm.dijkstra(pDInfoPricen, i);
+        }
+        return pDInfoPricen;
     }
 
     void beforeAction(List<PriceDistanceInfo>[][] pDInfoPrice, List<PriceDistanceInfo>[][] testPDInfoPrice) {

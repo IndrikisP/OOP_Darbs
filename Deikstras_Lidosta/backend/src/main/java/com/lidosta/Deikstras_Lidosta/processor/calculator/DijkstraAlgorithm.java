@@ -1,92 +1,90 @@
 package com.lidosta.Deikstras_Lidosta.processor.calculator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class DijkstraAlgorithm {
-    public static List<PriceDistanceInfo>[][] dijkstra(List<PriceDistanceInfo>[][] pDInfoPrice) {
-        int numRows = pDInfoPrice.length;
-        int numCols = pDInfoPrice[0].length;
 
-        List<PriceDistanceInfo>[][] pDInfonew = new List[numRows][numCols];
-        int[][] distances = new int[numRows][numCols];
+    private static int INF = Integer.MAX_VALUE / 2;
 
-        // Initialize distances with infinity for all vertices
-        for (int i = 0; i < numRows; i++) {
-            Arrays.fill(distances[i], Integer.MAX_VALUE);
+    private int n; // количество вершин в орграфе
+    private ArrayList<Integer>[] adj; // список смежности
+    private ArrayList<Integer>[] weight; // вес ребра в орграфе
+    private boolean[] used; // массив для хранения информации о пройденных и не пройденных вершинах
+    private int[] dist; // массив для хранения расстояния от стартовой вершины
+    // массив предков, необходимых для восстановления кратчайшего пути из стартовой вершины
+    private int[] pred;
+    private int start; // стартовая вершина, от которой ищется расстояние до всех других
+
+    // процедура запуска алгоритма Дейкстры из стартовой вершины
+    public List<PriceDistanceInfo>[][] dijkstra(List<PriceDistanceInfo>[][] exe, int s) {
+        n = exe.length; // количество вершин в орграфе
+        adj = new ArrayList[n];
+        weight = new ArrayList[n];
+        used = new boolean[n];
+        dist = new int[n];
+        pred = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            adj[i] = new ArrayList<>();
+            weight[i] = new ArrayList<>();
+            used[i] = false;
+            dist[i] = INF;
+            pred[i] = -1;
         }
 
-        // Start from the top-left corner
-        int startRow = 0;
-        int startCol = 0;
-        distances[startRow][startCol] = 0;
+        start = s;
+        dist[start] = 0; // кратчайшее расстояние до стартовой вершины равно 0
 
-        // Dijkstra's algorithm
-        while (true) {
-            int minDistance = Integer.MAX_VALUE;
-            int currentRow = -1;
-            int currentCol = -1;
+        for (int iter = 0; iter < n; ++iter) {
+            int v = -1;
+            int distV = INF;
 
-            // Find the cell with the minimum distance among the unvisited cells
-            for (int row = 0; row < numRows; row++) {
-                for (int col = 0; col < numCols; col++) {
-                    if (distances[row][col] < minDistance && !isVisited(row, col, pDInfonew)) {
-                        minDistance = distances[row][col];
-                        currentRow = row;
-                        currentCol = col;
-                    }
+            // выбираем вершину, кратчайшее расстояние до которого еще не найдено
+            for (int i = 0; i < n; ++i) {
+                if (!used[i] && dist[i] <= distV) {
+                    v = i;
+                    distV = dist[i];
                 }
             }
 
-            // If all cells have been visited or the minimum distance is infinity, exit the loop
-            if (currentRow == -1 || minDistance == Integer.MAX_VALUE) {
-                break;
+            if (distV == INF) {
+                break; // все оставшиеся вершины недостижимы из start
             }
 
-            // Mark the current cell as visited
-            markVisited(currentRow, currentCol, pDInfonew);
+            used[v] = true;
 
-            // Update distances of neighboring unvisited cells
-            updateDistances(currentRow, currentCol, distances, pDInfoPrice, pDInfonew);
-        }
+            // рассматриваем все смежные вершины с вершиной v
+            for (int i = 0; i < n; ++i) {
+                if (exe[v][i].size() > 0) {
+                    int u = i;
+                    int weightU = exe[v][i].get(0).getDistance();
 
-        return pDInfonew;
-    }
-
-    private static boolean isVisited(int row, int col, List<PriceDistanceInfo>[][] pDInfonew) {
-        return pDInfonew[row][col] != null;
-    }
-
-    private static void markVisited(int row, int col, List<PriceDistanceInfo>[][] pDInfonew) {
-        pDInfonew[row][col] = new ArrayList<>();
-    }
-
-    private static void updateDistances(int row, int col, int[][] distances, List<PriceDistanceInfo>[][] pDInfoPrice, List<PriceDistanceInfo>[][] pDInfonew) {
-        int distance = distances[row][col];
-
-        // Update distances of neighboring unvisited cells
-        if (row - 1 >= 0 && !isVisited(row - 1, col, pDInfonew)) {
-            int newDistance = distance + pDInfoPrice[row][col].get(0).getDistance();
-            if (newDistance < distances[row - 1][col]) {
-                distances[row - 1][col] = newDistance;
+                    // релаксация вершины
+                    if (dist[v] + weightU < dist[u]) {
+                        dist[u] = dist[v] + weightU;
+                        pred[u] = v;
+                    }
+                }
             }
         }
-        if (row + 1 < pDInfonew.length && !isVisited(row + 1, col, pDInfonew)) {
-            int newDistance = distance + pDInfoPrice[row][col].get(0).getDistance();
-            if (newDistance < distances[row + 1][col]) {
-                distances[row + 1][col] = newDistance;
+
+        List<PriceDistanceInfo>[][] res = new List[n][n];
+
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if(i==s) {
+                    res[i][j] = new ArrayList<>();
+                    res[i][j].add(exe[i][j].get(0));
+                    res[i][j].get(0).setDistance(dist[j]);
+                } else {
+                    res[i][j] = new ArrayList<>();
+                    res[i][j].add(exe[i][j].get(0));
+                }
             }
         }
-        if (col - 1 >= 0 && !isVisited(row, col - 1, pDInfonew)) {
-            int newDistance = distance + pDInfoPrice[row][col].get(0).getDistance();
-            if (newDistance < distances[row][col - 1]) {
-                distances[row][col - 1] = newDistance;
-            }
-        }
-        if (col + 1 < pDInfonew[0].length && !isVisited(row, col + 1, pDInfonew)) {
-            int newDistance = distance + pDInfoPrice[row][col].get(0).getDistance();
-            if (newDistance < distances[row][col + 1]) {
-                distances[row][col + 1] = newDistance;
-            }
-        }
+
+        return res;
     }
 }
