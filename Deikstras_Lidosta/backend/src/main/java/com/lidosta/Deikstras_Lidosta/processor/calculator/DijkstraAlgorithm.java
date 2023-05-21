@@ -18,12 +18,13 @@ public class DijkstraAlgorithm {
 
     // процедура запуска алгоритма Дейкстры из стартовой вершины
     public List<PriceDistanceInfo>[][] dijkstra(List<PriceDistanceInfo>[][] exe, int s) {
-        n = exe.length; // количество вершин в орграфе
+        n = exe.length;
         adj = new ArrayList[n];
         weight = new ArrayList[n];
         used = new boolean[n];
         dist = new int[n];
         pred = new int[n];
+        List<List<UUID>> paths = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
             adj[i] = new ArrayList<>();
@@ -31,16 +32,16 @@ public class DijkstraAlgorithm {
             used[i] = false;
             dist[i] = INF;
             pred[i] = -1;
+            paths.add(new ArrayList<>()); // Add a new path for each vertex
         }
 
         start = s;
-        dist[start] = 0; // кратчайшее расстояние до стартовой вершины равно 0
+        dist[start] = 0;
 
         for (int iter = 0; iter < n; ++iter) {
             int v = -1;
             int distV = INF;
 
-            // выбираем вершину, кратчайшее расстояние до которого еще не найдено
             for (int i = 0; i < n; ++i) {
                 if (!used[i] && dist[i] <= distV) {
                     v = i;
@@ -49,21 +50,22 @@ public class DijkstraAlgorithm {
             }
 
             if (distV == INF) {
-                break; // все оставшиеся вершины недостижимы из start
+                break;
             }
 
             used[v] = true;
 
-            // рассматриваем все смежные вершины с вершиной v
             for (int i = 0; i < n; ++i) {
                 if (exe[v][i].size() > 0) {
                     int u = i;
                     int weightU = exe[v][i].get(0).getDistance();
 
-                    // релаксация вершины
                     if (dist[v] + weightU < dist[u]) {
                         dist[u] = dist[v] + weightU;
                         pred[u] = v;
+                        paths.get(u).clear();
+                        paths.get(u).addAll(paths.get(v)); // Update the path from v to u
+                        paths.get(u).add(exe[v][i].get(0).getFlightId());
                     }
                 }
             }
@@ -75,14 +77,14 @@ public class DijkstraAlgorithm {
             for (int j = 0; j < n; ++j) {
                 if (i == s) {
                     res[i][j] = new ArrayList<>();
-                    if(exe[i][j].size()>0) {
+                    if (exe[i][j].size() > 0) {
                         res[i][j].add(exe[i][j].get(0));
                         res[i][j].get(0).setDistance(dist[j]);
-                        res[i][j].get(0).setPath(getPath(j, exe));
+                        res[i][j].get(0).setPath(paths.get(j)); // Use the correct index
                     }
                 } else {
                     res[i][j] = new ArrayList<>();
-                    if(exe[i][j].size()>0) {
+                    if (exe[i][j].size() > 0) {
                         res[i][j].add(exe[i][j].get(0));
                     }
                 }
@@ -90,17 +92,5 @@ public class DijkstraAlgorithm {
         }
 
         return res;
-    }
-
-    private List<UUID> getPath(int j,List<PriceDistanceInfo>[][] exe) {
-        List<UUID> path = new ArrayList<>();
-        int curr = j;
-        while (curr != -1) {
-            if(exe[curr][curr].size()>0) {
-                path.add(0, exe[curr][curr].get(0).getFlightId());
-            }
-            curr = pred[curr];
-        }
-        return path;
     }
 }

@@ -159,8 +159,8 @@ public class DijkstraAlgorithmTest {
         List<PriceDistanceInfo> actual = new ArrayList<>();
         List<PriceDistanceInfo> expected = new ArrayList<>();
 
-        PriceDistanceInfo info1 = new PriceDistanceInfo(UUID.randomUUID(), 100.0f, distances.get(counter++));
-        PriceDistanceInfo info2 = new PriceDistanceInfo(UUID.randomUUID(), 100.0f, testDistances.get(testCounter++));
+        PriceDistanceInfo info1 = new PriceDistanceInfo(UUID.randomUUID(), 100.0f, distances.get(counter++),null, null);
+        PriceDistanceInfo info2 = new PriceDistanceInfo(UUID.randomUUID(), 100.0f, testDistances.get(testCounter++), null, null);
 
         actual.add(info1);
         expected.add(info2);

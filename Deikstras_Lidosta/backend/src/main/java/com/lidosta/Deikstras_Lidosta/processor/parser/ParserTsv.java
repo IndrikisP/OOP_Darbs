@@ -70,7 +70,7 @@ public class ParserTsv {
                         row[13],
                         tmpAirplane.getAirplaneId(),
                         row[14]), flightService);
-                PriceDistanceInfo info = new PriceDistanceInfo(tmpFlight.getFlightId(), price, distance);
+                PriceDistanceInfo info = new PriceDistanceInfo(tmpFlight.getFlightId(), price, distance, tmpAirportFrom.getName(), tmpAirportTo.getName());
                 calculation.addRecordToGraph(tmpAirportFrom.getAirportId(), tmpAirportTo.getAirportId(), info);
                 rowCount++;
             }

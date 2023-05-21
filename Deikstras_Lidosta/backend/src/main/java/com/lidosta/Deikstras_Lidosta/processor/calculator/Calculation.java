@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 @Service
 public class Calculation {
-    private static int size = 1000;
+    private static int size = 20;
     private static Calculation calculation = null;
     private static List<PriceDistanceInfo>[][] shortestDistance = null;
     int verticleCount;
@@ -57,8 +57,8 @@ public class Calculation {
         }
         if (v1pos != -1 && v2pos != -1) {
             pDInfo[v1pos][v2pos].add(priceDistanceInfo);
-            pDInfo[v1pos][v1pos].add(new PriceDistanceInfo(priceDistanceInfo.getFlightId(),0f,0, null));
-            pDInfo[v2pos][v2pos].add(new PriceDistanceInfo(priceDistanceInfo.getFlightId(),0f,0, null));
+            pDInfo[v1pos][v1pos].add(new PriceDistanceInfo(priceDistanceInfo.getFlightId(),0f,priceDistanceInfo.getDistance(), priceDistanceInfo.getAirportFromName(), priceDistanceInfo.getAirportToName()));
+           // pDInfo[v2pos][v2pos].add(new PriceDistanceInfo(priceDistanceInfo.getFlightId(),0f,priceDistanceInfo.getDistance(), null));
 
             return true;
         }
@@ -85,13 +85,17 @@ public class Calculation {
                 if (!pDInfo[u][j].isEmpty()) {
                     sb.append("\tlidostu ").append(nosaukums).append(" par\n");
                     for (PriceDistanceInfo info : pDInfo[u][j]) {
-                        sb.append("id: ")
-                                .append(info.getFlightId())
-                                .append(" | ")
-                                .append(info.getPrice())
-                                .append(" EUR ")
-                                .append(info.getDistance())
-                                .append(" KM\n");
+                        if(info.getDistance()>0) {
+                            sb.append("id: ")
+                                    .append(info.getAirportFromName())
+                                    .append("->")
+                                    .append(info.getAirportToName())
+                                    .append(" | ")
+                                    .append(info.getPrice())
+                                    .append(" EUR ")
+                                    .append(info.getDistance())
+                                    .append(" KM\n");
+                        }
                     }
                     System.out.println(sb);
                     sb = new StringBuilder();
@@ -112,8 +116,20 @@ public class Calculation {
         for (int i = 0; i < pDInfo.length; i++) {
             shortestDistance = algorithm.dijkstra(shortestDistance, i);
         }
+        printShortestGraph();
     }
 
+    public void printShortestGraph(){
+        for(int i =0; i < shortestDistance.length; i++) {
+            for (int j = 0; j < shortestDistance.length;j++) {
+                if(shortestDistance[i][j].size()>0) {
+                    System.out.print(shortestDistance[i][j].get(0).getDistance() + " ");
+                    System.out.println(shortestDistance[i][j].get(0).getPath());
+                }
+            }
+            System.out.println();
+        }
+    }
     public List<UUID> getShortestDistanceFromTo(UUID from, UUID to) {
         int x = 0;
         int y = 0;
