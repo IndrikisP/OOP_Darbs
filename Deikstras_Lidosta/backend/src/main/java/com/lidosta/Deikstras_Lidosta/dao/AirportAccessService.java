@@ -69,4 +69,9 @@ public class AirportAccessService implements Dao<Airport>{
     public List<Airport> selectByIds(List<UUID> t) {
         return null;
     }
+
+    @Override
+    public List<List<Airport>> selectPaths(List<List<UUID>> t) {
+        return null;
+    }
 }

@@ -16,6 +16,7 @@ public class Calculation {
     private static int size = 20;
     private static Calculation calculation = null;
     private static List<PriceDistanceInfo>[][] shortestDistance = null;
+    private static List<PriceDistanceInfo>[][] allPaths = null;
     int verticleCount;
     UUID[] verticles = new UUID[size];
     private static final List<PriceDistanceInfo>[][] pDInfo = new List[size][size];
@@ -34,6 +35,9 @@ public class Calculation {
         return calculation;
     }
 
+    UUID[] getVerticles(){
+        return verticles;
+    }
     boolean addAirport(UUID airportId) {
         for (int i = 0; i < verticleCount; i++) {
             if (verticles[i].equals(airportId)) {
@@ -57,7 +61,8 @@ public class Calculation {
         }
         if (v1pos != -1 && v2pos != -1) {
             pDInfo[v1pos][v2pos].add(priceDistanceInfo);
-            pDInfo[v1pos][v1pos].add(new PriceDistanceInfo(priceDistanceInfo.getFlightId(),0f,priceDistanceInfo.getDistance(), priceDistanceInfo.getAirportFromName(), priceDistanceInfo.getAirportToName()));
+            //todo set airport
+            pDInfo[v1pos][v1pos].add(new PriceDistanceInfo(priceDistanceInfo.getFlightId(),0f,priceDistanceInfo.getDistance()));
            // pDInfo[v2pos][v2pos].add(new PriceDistanceInfo(priceDistanceInfo.getFlightId(),0f,priceDistanceInfo.getDistance(), null));
 
             return true;
@@ -87,9 +92,7 @@ public class Calculation {
                     for (PriceDistanceInfo info : pDInfo[u][j]) {
                         if(info.getDistance()>0) {
                             sb.append("id: ")
-                                    .append(info.getAirportFromName())
                                     .append("->")
-                                    .append(info.getAirportToName())
                                     .append(" | ")
                                     .append(info.getPrice())
                                     .append(" EUR ")
@@ -119,6 +122,11 @@ public class Calculation {
         printShortestGraph();
     }
 
+    public void calculateAllPaths(){
+        AllPathsAlgorithm allPathsAlgorithm = new AllPathsAlgorithm();
+        allPaths = allPathsAlgorithm.getAllFlights(pDInfo);
+    }
+
     public void printShortestGraph(){
         for(int i =0; i < shortestDistance.length; i++) {
             for (int j = 0; j < shortestDistance.length;j++) {
@@ -144,6 +152,27 @@ public class Calculation {
         return shortestDistance[x][y].size()>0 ? shortestDistance[x][y].get(0).getPath() : null;
     }
 
+    //can add price as well
+    public List<List<UUID>> getAllPathsFromTo(UUID from, UUID to) {
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < verticleCount; i++) {
+            if (verticles[i].equals(from)) {
+                x = i;
+            }
+            if (verticles[i].equals(to)) {
+                y = i;
+            }
+        }
+        List<List<UUID>> paths = new ArrayList<>();
+
+        if(allPaths[x][y].size()>0) {
+            for (PriceDistanceInfo info: allPaths[x][y]) {
+                paths.add(info.getPath());
+            }
+        }
+        return paths;
+    }
     // No real usage for task
     public void printVertices() {
         for (int i = 0; i < verticleCount; i++) {

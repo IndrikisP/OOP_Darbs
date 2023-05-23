@@ -7,16 +7,14 @@ import java.util.UUID;
 public class DijkstraAlgorithm {
 
     private static int INF = Integer.MAX_VALUE / 2;
-    private int n; // количество вершин в орграфе
-    private ArrayList<Integer>[] adj; // список смежности
-    private ArrayList<Integer>[] weight; // вес ребра в орграфе
-    private boolean[] used; // массив для хранения информации о пройденных и не пройденных вершинах
-    private int[] dist; // массив для хранения расстояния от стартовой вершины
-    // массив предков, необходимых для восстановления кратчайшего пути из стартовой вершины
+    private int n;
+    private ArrayList<Integer>[] adj;
+    private ArrayList<Integer>[] weight;
+    private boolean[] used;
+    private int[] dist;
     private int[] pred;
-    private int start; // стартовая вершина, от которой ищется расстояние до всех других
+    private int start;
 
-    // процедура запуска алгоритма Дейкстры из стартовой вершины
     public List<PriceDistanceInfo>[][] dijkstra(List<PriceDistanceInfo>[][] exe, int s) {
         n = exe.length;
         adj = new ArrayList[n];

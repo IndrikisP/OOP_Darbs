@@ -39,10 +39,15 @@ public class FlightController {
 
     }
 
-    @GetMapping(value = "/get/allFlights")
-    public List<Flight> getFlights() {
-        return flightService.getAllFlights();
+    @GetMapping(value = "/get/paths")
+    public List<List<Flight>> getAllPathsFromTo(@RequestParam("fromid") UUID fromId,
+                                           @RequestParam("toid") UUID toId) {
+        return flightService.getAllPaths(fromId,toId);
 
     }
 
+    @GetMapping(value = "/get/allFlights")
+    public List<Flight> getFlights() {
+        return flightService.getAllFlights();
+    }
 }
