@@ -35,6 +35,9 @@ public class FlightService {
 
     public List<Flight> getShortestFlight(UUID flightFrom, UUID flightTo) {
         return (List<Flight>) dao.selectByIds(Calculation.getInstance().getShortestDistanceFromTo(flightFrom, flightTo));
+    }
 
+    public List<List<Flight>> getAllPaths(UUID flightFrom, UUID flightTo,String name, int parameter) {
+        return (List<List<Flight>>) dao.selectPaths(Calculation.getInstance().getAllPathsFromTo(flightFrom, flightTo,name, parameter));
     }
 }

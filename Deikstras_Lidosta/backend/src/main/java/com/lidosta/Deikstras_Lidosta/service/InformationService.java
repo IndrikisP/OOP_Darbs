@@ -25,7 +25,8 @@ public class InformationService {
     public void uploadInformation(File file) {
         ParserTsv parserTsv = new ParserTsv();
         parserTsv.parse(file, airportService, airplaneService, flightService);
-        Calculation.getInstance().calculateShortestPathGraph();
+        //Calculation.getInstance().calculateShortestPathGraph();
+        Calculation.getInstance().calculateAllPaths();
     }
 
     //delete if not need

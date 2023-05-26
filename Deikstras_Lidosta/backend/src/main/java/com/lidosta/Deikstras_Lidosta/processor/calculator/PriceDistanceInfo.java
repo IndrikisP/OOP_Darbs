@@ -2,6 +2,7 @@ package com.lidosta.Deikstras_Lidosta.processor.calculator;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -10,8 +11,8 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @ToString
+@NoArgsConstructor
 //rename to path distance price class
 public class PriceDistanceInfo {
     UUID flightId;
@@ -23,5 +24,12 @@ public class PriceDistanceInfo {
         this.flightId = flightId;
         this.price = price;
         this.distance = distance;
+    }
+
+    public PriceDistanceInfo(UUID flightId, float price, int distance, List<UUID> path) {
+        this.flightId = flightId;
+        this.price = price;
+        this.distance = distance;
+        this.path = path;
     }
 }

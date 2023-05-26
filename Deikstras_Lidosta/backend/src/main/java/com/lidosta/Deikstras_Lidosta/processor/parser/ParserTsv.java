@@ -77,7 +77,6 @@ public class ParserTsv {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
         System.out.println("Sum of not unique row count: " + rowCount);
     }
 

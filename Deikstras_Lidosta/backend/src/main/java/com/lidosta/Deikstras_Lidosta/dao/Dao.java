@@ -13,5 +13,6 @@ public interface Dao<T> {
     T checkIfExist(T object);
 
     List<T> selectByIds(List<UUID> t);
+    List<List<T>> selectPaths(List<List<UUID>> t);
 
 }

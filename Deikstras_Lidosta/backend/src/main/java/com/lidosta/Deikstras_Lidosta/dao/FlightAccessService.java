@@ -63,7 +63,7 @@ public class FlightAccessService implements Dao<Flight> {
                     resultSet.getString("timezone"),
                     UUID.fromString(resultSet.getString("airplane_id")),
                     resultSet.getString("company")
-                    );
+            );
         });
     }
 
@@ -82,7 +82,7 @@ public class FlightAccessService implements Dao<Flight> {
     public List<Flight> selectByIds(List<UUID> ids) {
         List<String> uuidStrings = new ArrayList<>();
         for (UUID id : ids) {
-            uuidStrings.add("'"+id.toString()+"'");
+            uuidStrings.add("'" + id.toString() + "'");
         }
         String idList = String.join(",", uuidStrings);
 
@@ -105,4 +105,35 @@ public class FlightAccessService implements Dao<Flight> {
             );
         });
     }
+
+    @Override
+    public List<List<Flight>> selectPaths(List<List<UUID>> flightPaths) {
+        List<List<Flight>> result = new ArrayList<>();
+        for (List<UUID> flights : flightPaths) {
+            List<Flight> orderedFlights = new ArrayList<>();
+            for (UUID id : flights) {
+
+                final String sql = "SELECT * FROM flights WHERE flight_id = ? ";
+
+                orderedFlights.add(jdbcTemplate.queryForObject(sql, (resultSet, i) -> {
+                    return new Flight(
+                            UUID.fromString(resultSet.getString("flight_id")),
+                            UUID.fromString(resultSet.getString("from_id")),
+                            UUID.fromString(resultSet.getString("to_id")),
+                            Integer.valueOf(resultSet.getString("distance")),
+                            Float.valueOf(resultSet.getString("price")),
+                            resultSet.getDate("time_of_arrival"),
+                            resultSet.getDate("time_of_departure"),
+                            resultSet.getString("timezone"),
+                            UUID.fromString(resultSet.getString("airplane_id")),
+                            resultSet.getString("company")
+                    );
+                }, id));
+            }
+            result.add(orderedFlights);
+        }
+        return result;
+    }
+
+
 }

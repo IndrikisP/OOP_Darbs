@@ -68,5 +68,10 @@ public class AirplaneAccessService implements Dao<Airplane> {
         return null;
     }
 
+    @Override
+    public List<List<Airplane>> selectPaths(List<List<UUID>> t) {
+        return null;
+    }
+
 }
 
