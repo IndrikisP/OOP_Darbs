@@ -21,6 +21,18 @@ export const getAirportList = async (setAirportList) => {
             id: 'ff84731c-fc5a-11ed-be56-0242ac120002',
             airport: 'Copenhagen (CPH)'
         },
+        {
+            id: '46376844-fc5a-11ed-be56-0242ac120002',
+            airport: 'Belgrade Nikola Tesla (BEG)'
+        },
+        {
+            id: '46376f6a-fc5a-11ed-be56-0242ac120002',
+            airport: 'Antalya (AYT)'
+        },
+        {
+            id: '46376f6a-fc5a-11ed-be56-0242ac120002',
+            airport: 'Tel Aviv Ben Gurion (TLV)'
+        },
       ];
   
       const sortedData = data.sort((a, b) => {
@@ -52,26 +64,36 @@ export const getAirportList = async (setAirportList) => {
       const data = [
         [
           {
-            FlightId: "a",
-            FromId: "b",
-            ToId: "c"
+            FlightId: "123",
+            FromId: "Lisbon Portela (LIS)",
+            ToId: "Brussels (BRU)"
           },
           {
-            FlightId: "d",
-            FromId: "e",
-            ToId: "f"
+            FlightId: "234",
+            FromId: "Brussels (BRU)",
+            ToId: "Vienna (VIE)"
+          },
+          {
+            FlightId: "345",
+            FromId: "Vienna (VIE)",
+            ToId: "Copenhagen (CPH)"
+          },
+          {
+            FlightId: "456",
+            FromId: "Copenhagen (CPH)",
+            ToId: "Riga (RIX)"
           }
         ],
         [
           {
-            FlightId: "g",
-            FromId: "h",
-            ToId: "i"
+            FlightId: "789",
+            FromId: "Belgrade Nikola Tesla (BEG)",
+            ToId: "Antalya (AYT)"
           },
           {
-            FlightId: "j",
-            FromId: "k",
-            ToId: "l"
+            FlightId: "420",
+            FromId: "Antalya (AYT)",
+            ToId: "Tel Aviv Ben Gurion (TLV)"
           }
         ]
       ];

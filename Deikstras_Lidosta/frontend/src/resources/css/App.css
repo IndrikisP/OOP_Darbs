@@ -40,10 +40,61 @@
   color: white;
 }
 
-.tabulasstilinsh tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+.tabulasstilinsh tbody {
+  background-color: #e6e6e6;
 }
 
-.tabulasstilinsh tbody tr:hover {
-  background-color: #e6e6e6;
+.tabulamodal {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f7f7f7;
+}
+
+.tabulamodal th,
+.tabulamodal td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabulamodal th {
+  font-weight: bold;
+  background-color: #79b4e9;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  width: 100%;
+}
+
+.headStopover {
+  background-color: red;
+  text-align: center;
+  width: 40%;
+  margin: 0 auto;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+.stops{
+  font-weight: bold;
 }

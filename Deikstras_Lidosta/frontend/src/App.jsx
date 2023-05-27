@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './resources/css/App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
+import Modal from 'react-modal';
 import { getAirportList, getAllFilters, getFlightInfo } from './Api.jsx';
 
 const App = () => {
@@ -17,6 +18,10 @@ const App = () => {
   const [airportList, setAirportList] = useState([]);
   const [allFilters, setAllFilters] = useState([]);
   const [flightInfo, setFlightInfo] = useState([]);
+  const [selectedFlight, setSelectedFlight] = useState([]);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+
   const currentDate = new Date();
 
   useEffect(() => {
@@ -41,6 +46,16 @@ const App = () => {
 
   const handleDateChange = date => {
     setSelectedDate(date);
+  };
+
+  const openDialog = (flightData) => {
+    setSelectedFlight(flightData);
+    setDialogOpen(true);
+  };
+  
+  const closeDialog = () => {
+    setSelectedFlight([]);
+    setDialogOpen(false);
   };
 
   const filteredOriginList = airportList.filter(item =>
@@ -148,26 +163,70 @@ const App = () => {
       <Button variant="primary" className="selectionItems" onClick={handleButtonClick}>
       Submit
     </Button>
-    {tableData.length > 0 && (
-      <table className='tabulasstilinsh'>
+    {flightInfo.length > 0 && (
+      <table className="tabulasstilinsh">
         <thead>
           <tr>
             <th>Origin</th>
             <th>Destination</th>
-            <th>Date</th>
+            <th>Stopovers</th>
           </tr>
         </thead>
         <tbody>
-          {tableData.map((row, index) => (
+          {flightInfo.map((array, index) => {
+            const stopoverCount = array.length - 1;
+            const hasStopovers = stopoverCount > 0;
+
+            return (
+              <tr key={index}>
+                <td>{array[0].FromId}</td>
+                <td>{array[array.length - 1].ToId}</td>
+                <td onClick={hasStopovers ? () => openDialog(array) : null}>
+                  {hasStopovers ? `${stopoverCount} stopover${stopoverCount === 1 ? '' : 's'}` : 'Non-stop'}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    )}
+
+    <Modal
+      isOpen={dialogOpen}
+      onRequestClose={closeDialog}
+      className="modal-content"
+      overlayClassName="modal-overlay"
+      center
+    >
+      <h2 className="headStopover">Stopovers</h2>
+      <table className="tabulamodal">
+        <thead>
+          <tr>
+            <th>Flight ID</th>
+            <th>From ID</th>
+            <th>To ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          {selectedFlight.map((flight, index) => (
             <tr key={index}>
-              <td>{row.origin}</td>
-              <td>{row.destination}</td>
-              <td>{row.date}</td>
+              <td>{flight.FlightId}</td>
+              <td>{flight.FromId}</td>
+              <td>
+                {index == selectedFlight.length - 1 ? (
+                  flight.ToId
+                ) : (
+                  <>
+                    {flight.ToId} - <span className='stops'> stopover</span>
+                  </>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-    )}
+      <button className="modalBtn" onClick={closeDialog}>Close</button>
+    </Modal>
     </div>
   );
 };
