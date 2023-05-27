@@ -1,4 +1,4 @@
-package com.lidosta.Deikstras_Lidosta.processor.calculator;
+package com.lidosta.Deikstras_Lidosta.processor.calculator.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

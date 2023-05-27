@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './resources/css/App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Modal from 'react-modal';
-import { getAirportList, getAllFilters, getFlightInfo } from './Api.jsx';
+import {getAirportList, getAllFilters, getAllFlights, getFlightInfo} from './Api.jsx';
 
 const App = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -22,9 +22,13 @@ const App = () => {
   const [selectedFlight, setSelectedFlight] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+<<<<<<< HEAD
   const [selectedParamOnSubmit, setSelectedParamOnSubmit] = useState('');
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
+=======
+  const [flightData,setFlightData] = useState([]);
+>>>>>>> origin/karlis
 
   const currentDate = new Date();
 
@@ -39,7 +43,14 @@ const App = () => {
   useEffect(() => {
     getFlightInfo(setFlightInfo)
   }, [])
+<<<<<<< HEAD
 
+=======
+  useEffect(() => {
+    getAllFlights(selectedItemOrigin,selectedItemDestination,selectedParam,setFlightData)
+  }, [])
+  
+>>>>>>> origin/karlis
   const handleSearchOrigin = (event) => {
     setSearchTextOrigin(event.target.value);
   };
@@ -62,9 +73,14 @@ const App = () => {
     setDialogOpen(false);
   };
 
+<<<<<<< HEAD
   const handleButtonClick = () => {
     setIsButtonClicked(true);
     setSelectedParamOnSubmit(selectedParam);
+=======
+  const handleButtonClick = async () => {
+    await getAllFlights(selectedItemOrigin,selectedItemDestination,selectedParam,setFlightData);
+>>>>>>> origin/karlis
     setSubmitted(true);
   };
 
@@ -74,11 +90,11 @@ const App = () => {
   };
 
   const filteredOriginList = airportList.filter(item =>
-    item.airport.toLowerCase().includes(searchTextOrigin.toLowerCase())
+    item.cityName.toLowerCase().includes(searchTextOrigin.toLowerCase())
   );
 
   const filteredDestinationList = airportList.filter(item =>
-    item.airport.toLowerCase().includes(searchTextDestination.toLowerCase())
+    item.cityName.toLowerCase().includes(searchTextDestination.toLowerCase())
   );
 
   const isOriginEmpty = searchTextOrigin.trim() !== '' && filteredOriginList.length === 0;
@@ -103,12 +119,21 @@ const App = () => {
             {isOriginEmpty ? (
               <Dropdown.Item disabled>No items found</Dropdown.Item>
             ) : (
+<<<<<<< HEAD
                 filteredOriginList.map((item, index) => (
                   <Dropdown.Item key={index} onClick={() => setSelectedItemOrigin(item.airport)}>
                     {item.airport}
                   </Dropdown.Item>
                 ))
               )}
+=======
+              filteredOriginList.map((item, index) => (
+                <Dropdown.Item key={index} onClick={() => setSelectedItemOrigin(item.airportId)}>
+                  {item.cityName}
+                </Dropdown.Item>
+              ))
+            )}
+>>>>>>> origin/karlis
           </Dropdown.Menu>
         </Dropdown>
         <Dropdown className="selectionItems">
@@ -126,12 +151,21 @@ const App = () => {
             {isDestinationEmpty ? (
               <Dropdown.Item disabled>No items found</Dropdown.Item>
             ) : (
+<<<<<<< HEAD
                 filteredDestinationList.map((item, index) => (
                   <Dropdown.Item key={index} onClick={() => setSelectedItemDestination(item.airport)}>
                     {item.airport}
                   </Dropdown.Item>
                 ))
               )}
+=======
+              filteredDestinationList.map((item, index) => (
+                <Dropdown.Item key={index} onClick={() => setSelectedItemDestination(item.airportId)}>
+                  {item.cityName}
+                </Dropdown.Item>
+              ))
+            )}
+>>>>>>> origin/karlis
           </Dropdown.Menu>
         </Dropdown>
 
@@ -176,6 +210,7 @@ const App = () => {
         </Dropdown>
       </div>
       <Button variant="primary" className="selectionItems" onClick={handleButtonClick}>
+<<<<<<< HEAD
         Submit
       </Button>
       {submitted && flightInfo.length > 0 && isButtonClicked && (
@@ -192,6 +227,23 @@ const App = () => {
             {flightInfo.map((array, index) => {
               const stopoverCount = array.length - 1;
               const hasStopovers = stopoverCount > 0;
+=======
+      Submit
+    </Button>
+    {submitted && flightInfo.length > 0 && (
+      <table className="tabulasstilinsh">
+        <thead>
+          <tr>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Stopovers</th>
+          </tr>
+        </thead>
+        <tbody>
+          {flightData.map((array, index) => {
+            const stopoverCount = array.length - 1;
+            const hasStopovers = stopoverCount > 0;
+>>>>>>> origin/karlis
 
               return (
                 <tr key={index}>
@@ -226,6 +278,7 @@ const App = () => {
           <tbody>
             {selectedFlight.map((flight, index) => (
               <tr key={index}>
+<<<<<<< HEAD
                 <td>{flight.FlightId}</td>
                 <td>{flight.FromId}</td>
                 <td>
@@ -243,6 +296,56 @@ const App = () => {
         </table>
         <button className="btn btn-primary modalBtn border-2 border-dark" onClick={closeDialog}>Close</button>
       </Modal>
+=======
+                <td>{array[0].fromId}</td>
+                <td>{array[array.length - 1].toId}</td>
+                <td onClick={hasStopovers ? () => openDialog(array) : null}>
+                  {hasStopovers ? `${stopoverCount} stopover${stopoverCount === 1 ? '' : 's'}` : 'Non-stop'}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    )}
+
+    <Modal
+      isOpen={dialogOpen}
+      onRequestClose={closeDialog}
+      className="modal-content"
+      overlayClassName="modal-overlay"
+      center
+    >
+      <h2 className="headStopover">Stopovers</h2>
+      <table className="tabulamodal">
+        <thead>
+          <tr>
+            <th>Flight ID</th>
+            <th>From ID</th>
+            <th>To ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          {selectedFlight.map((flight, index) => (
+            <tr key={index}>
+              <td>{flight.flightId}</td>
+              <td>{flight.fromId}</td>
+              <td>
+                {index === selectedFlight.length - 1 ? (
+                  flight.toId
+                ) : (
+                  <>
+                    {flight.toId} - <span className='stops'> stopover</span>
+                  </>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button className="btn btn-primary modalBtn border-2 border-dark" onClick={closeDialog}>Close</button>
+    </Modal>
+>>>>>>> origin/karlis
     </div>
   );
 };

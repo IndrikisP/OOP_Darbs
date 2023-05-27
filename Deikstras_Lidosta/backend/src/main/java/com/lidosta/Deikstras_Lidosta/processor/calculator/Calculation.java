@@ -1,10 +1,9 @@
 package com.lidosta.Deikstras_Lidosta.processor.calculator;
 
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.PriceDistanceInfo;
 import org.springframework.stereotype.Service;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
