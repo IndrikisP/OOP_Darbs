@@ -1,0 +1,13 @@
+-- Role: oop
+-- DROP ROLE oop;
+
+CREATE ROLE oop WITH
+    LOGIN
+    SUPERUSER
+    INHERIT
+    CREATEDB
+    CREATEROLE
+    REPLICATION
+    ENCRYPTED PASSWORD 'SCRAM-SHA-256$4096:C2wng2BEyb45k4BEnHV2Qg==$VG8J9N8DFJZZnmAs1zdTlAa3cHgfcqyOou1xQd/pTPY=:tY0w+d00pwbYOdB1fBFD37M4PpnHMVgCxoMHiqIsq5E=';
+
+COMMENT ON ROLE oop IS 'Owner of Dijkstras Airport Project';

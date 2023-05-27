@@ -1,0 +1,7 @@
+%syntax-version=1.0.0
+%project=flipr
+%uri=https://github.com/sqitchers/sqitch-intro/
+
+airport 2023-05-15T18:31:12Z OOP <ao20023@LAPTOP-7KUKI0FH> # Add schema for airport.
+airplane 2023-05-15T19:15:49Z OOP <ao20023@LAPTOP-7KUKI0FH> # Add schema for airplane objects.
+flight 2023-05-15T19:15:54Z OOP <ao20023@LAPTOP-7KUKI0FH> # Add schema for flight objects.
