@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Dropdown, FormControl, Button } from 'react-bootstrap';
+import { Dropdown, FormControl, Button, Form } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './resources/css/App.css';
@@ -11,7 +11,8 @@ const App = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [searchTextOrigin, setSearchTextOrigin] = useState('');
   const [searchTextDestination, setSearchTextDestination] = useState('');
-  const [selectedItemSort, setSelectedItemSort] = useState('Sort by');
+  const [selectedParam, setSelectedParam] = useState('Choose Param');
+  const [isSelectedParam, setIsSelectedParam] = useState(false);
   const [selectedItemOrigin, setSelectedItemOrigin] = useState('Select Flight Origin');
   const [selectedItemDestination, setSelectedItemDestination] = useState('Select Flight Destination');
   const [tableData, setTableData] = useState([]);
@@ -63,6 +64,10 @@ const App = () => {
     setSubmitted(true);
   };
 
+  const handleSelectedParam = () => {
+    setIsSelectedParam(true);
+  };
+
   const filteredOriginList = airportList.filter(item =>
     item.airport.toLowerCase().includes(searchTextOrigin.toLowerCase())
   );
@@ -76,7 +81,7 @@ const App = () => {
   
   return (
     <div className="container">
-      <h1 className="topcenterHead">Deikstras Lidosta ✈️</h1>
+      <h1 className="topcenterHead">Djikstra Airport ✈️</h1>
       <div className="dropdownContainer">
         <Dropdown className='selectionItems'>
           <Dropdown.Toggle variant="secondary">
@@ -127,17 +132,27 @@ const App = () => {
 
         <Dropdown className="selectionItems">
         <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
-          {selectedItemSort}
+          {selectedParam}
         </Dropdown.Toggle>
 
         <Dropdown.Menu variant="dark">
           {allFilters.map((item, index) => (
-            <Dropdown.Item key={index} onClick={() => setSelectedItemSort(item)}>
+            <Dropdown.Item key={index} onClick={() => { setSelectedParam(item); handleSelectedParam() }}>
               {item}
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
       </Dropdown>
+
+
+      { isSelectedParam && (
+        <Form className="valueTBox">
+        <Form.Group controlId="exampleForm.ControlInput1">
+          <FormControl type="text" placeholder="Enter Value" />
+        </Form.Group>
+      </Form>
+      )};
+      
 
       <Dropdown className='selectionItems'>
       <Dropdown.Toggle variant="secondary" id="dropdown-button">

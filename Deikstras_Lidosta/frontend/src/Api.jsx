@@ -59,9 +59,9 @@ export const getAirportList = async (setAirportList) => {
 
   export const getAllFilters = (setAllFilters) => {
     const data = [
-      'Cheapest',
-      'Fastest',
-      'Non-stop'
+      'Price',
+      'Distance',
+      'Stopover Count'
     ];
     setAllFilters(data);
     console.log(data);
@@ -69,6 +69,7 @@ export const getAirportList = async (setAirportList) => {
 
   export const getFlightInfo = async (setAirportList) => {
     try {
+
       const data = [
         [
           {
