@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './resources/css/App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Modal from 'react-modal';
-import { getAirportList, getAllFilters, getFlightInfo } from './Api.jsx';
+import {getAirportList, getAllFilters, getAllFlights, getFlightInfo} from './Api.jsx';
 
 const App = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -22,7 +22,7 @@ const App = () => {
   const [selectedFlight, setSelectedFlight] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
+  const [flightData,setFlightData] = useState([]);
 
   const currentDate = new Date();
 
@@ -36,6 +36,9 @@ const App = () => {
 
   useEffect(() => {
     getFlightInfo(setFlightInfo)
+  }, [])
+  useEffect(() => {
+    getAllFlights(selectedItemOrigin,selectedItemDestination,selectedParam,setFlightData)
   }, [])
   
   const handleSearchOrigin = (event) => {
@@ -60,7 +63,8 @@ const App = () => {
     setDialogOpen(false);
   };
 
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
+    await getAllFlights(selectedItemOrigin,selectedItemDestination,selectedParam,setFlightData);
     setSubmitted(true);
   };
 
@@ -69,11 +73,11 @@ const App = () => {
   };
 
   const filteredOriginList = airportList.filter(item =>
-    item.airport.toLowerCase().includes(searchTextOrigin.toLowerCase())
+    item.cityName.toLowerCase().includes(searchTextOrigin.toLowerCase())
   );
 
   const filteredDestinationList = airportList.filter(item =>
-    item.airport.toLowerCase().includes(searchTextDestination.toLowerCase())
+    item.cityName.toLowerCase().includes(searchTextDestination.toLowerCase())
   );
 
   const isOriginEmpty = searchTextOrigin.trim() !== '' && filteredOriginList.length === 0;
@@ -99,8 +103,8 @@ const App = () => {
               <Dropdown.Item disabled>No items found</Dropdown.Item>
             ) : (
               filteredOriginList.map((item, index) => (
-                <Dropdown.Item key={index} onClick={() => setSelectedItemOrigin(item.airport)}>
-                  {item.airport}
+                <Dropdown.Item key={index} onClick={() => setSelectedItemOrigin(item.airportId)}>
+                  {item.cityName}
                 </Dropdown.Item>
               ))
             )}
@@ -122,8 +126,8 @@ const App = () => {
               <Dropdown.Item disabled>No items found</Dropdown.Item>
             ) : (
               filteredDestinationList.map((item, index) => (
-                <Dropdown.Item key={index} onClick={() => setSelectedItemDestination(item.airport)}>
-                  {item.airport}
+                <Dropdown.Item key={index} onClick={() => setSelectedItemDestination(item.airportId)}>
+                  {item.cityName}
                 </Dropdown.Item>
               ))
             )}
@@ -183,14 +187,14 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
-          {flightInfo.map((array, index) => {
+          {flightData.map((array, index) => {
             const stopoverCount = array.length - 1;
             const hasStopovers = stopoverCount > 0;
 
             return (
               <tr key={index}>
-                <td>{array[0].FromId}</td>
-                <td>{array[array.length - 1].ToId}</td>
+                <td>{array[0].fromId}</td>
+                <td>{array[array.length - 1].toId}</td>
                 <td onClick={hasStopovers ? () => openDialog(array) : null}>
                   {hasStopovers ? `${stopoverCount} stopover${stopoverCount === 1 ? '' : 's'}` : 'Non-stop'}
                 </td>
@@ -220,14 +224,14 @@ const App = () => {
         <tbody>
           {selectedFlight.map((flight, index) => (
             <tr key={index}>
-              <td>{flight.FlightId}</td>
-              <td>{flight.FromId}</td>
+              <td>{flight.flightId}</td>
+              <td>{flight.fromId}</td>
               <td>
                 {index === selectedFlight.length - 1 ? (
-                  flight.ToId
+                  flight.toId
                 ) : (
                   <>
-                    {flight.ToId} - <span className='stops'> stopover</span>
+                    {flight.toId} - <span className='stops'> stopover</span>
                   </>
                 )}
               </td>
