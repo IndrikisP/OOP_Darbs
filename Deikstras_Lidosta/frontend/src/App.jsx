@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './resources/css/App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
+import { getAirportList, getAllFilters, getFlightInfo } from './Api.jsx';
 
 const App = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -13,8 +14,22 @@ const App = () => {
   const [selectedItemOrigin, setSelectedItemOrigin] = useState('Select Flight Origin');
   const [selectedItemDestination, setSelectedItemDestination] = useState('Select Flight Destination');
   const [tableData, setTableData] = useState([]);
-
+  const [airportList, setAirportList] = useState([]);
+  const [allFilters, setAllFilters] = useState([]);
+  const [flightInfo, setFlightInfo] = useState([]);
   const currentDate = new Date();
+
+  useEffect(() => {
+    getAirportList(setAirportList)
+  }, [])
+
+  useEffect(() => {
+    getAllFilters(setAllFilters)
+  }, [])
+
+  useEffect(() => {
+    getFlightInfo(setFlightInfo)
+  }, [])
   
   const handleSearchOrigin = (event) => {
     setSearchTextOrigin(event.target.value);
@@ -27,27 +42,17 @@ const App = () => {
   const handleDateChange = date => {
     setSelectedDate(date);
   };
-  
-  const filterOrigin = [
-    'List Item Origin 1',
-    'List Item Origin 2',
-    // receive some api data . . . 
-  ].filter(item => item.toLowerCase().includes(searchTextOrigin.toLowerCase()));
 
-  const filterDestination = [
-    'List Item Destination 1',
-    'List Item Destination 2',
-    // receive some api data . . . 
-  ].filter(item => item.toLowerCase().includes(searchTextDestination.toLowerCase()));
+  const filteredOriginList = airportList.filter(item =>
+    item.airport.toLowerCase().includes(searchTextOrigin.toLowerCase())
+  );
 
-  const filterSorts = [
-    'Cheapest',
-    'Shortest',
-    'Non-Stop'
-  ];
+  const filteredDestinationList = airportList.filter(item =>
+    item.airport.toLowerCase().includes(searchTextDestination.toLowerCase())
+  );
 
-  const isOriginEmpty = searchTextOrigin.trim() !== '' && filterOrigin.length === 0;
-  const isDestinationEmpty = searchTextDestination.trim() !== '' && filterDestination.length === 0;
+  const isOriginEmpty = searchTextOrigin.trim() !== '' && filteredOriginList.length === 0;
+  const isDestinationEmpty = searchTextDestination.trim() !== '' && filteredDestinationList.length === 0;
 
   const handleButtonClick = () => {
     const formData = {
@@ -78,8 +83,10 @@ const App = () => {
             {isOriginEmpty ? (
               <Dropdown.Item disabled>No items found</Dropdown.Item>
             ) : (
-              filterOrigin.map((item, index) => (
-                <Dropdown.Item key={index} onClick={() => setSelectedItemOrigin(item)}>{item}</Dropdown.Item>
+              filteredOriginList.map((item, index) => (
+                <Dropdown.Item key={index} onClick={() => setSelectedItemOrigin(item.airport)}>
+                  {item.airport}
+                </Dropdown.Item>
               ))
             )}
           </Dropdown.Menu>
@@ -99,8 +106,10 @@ const App = () => {
             {isDestinationEmpty ? (
               <Dropdown.Item disabled>No items found</Dropdown.Item>
             ) : (
-              filterDestination.map((item, index) => (
-                <Dropdown.Item key={index} onClick={() => setSelectedItemDestination(item)}>{item}</Dropdown.Item>
+              filteredDestinationList.map((item, index) => (
+                <Dropdown.Item key={index} onClick={() => setSelectedItemDestination(item.airport)}>
+                  {item.airport}
+                </Dropdown.Item>
               ))
             )}
           </Dropdown.Menu>
@@ -112,7 +121,7 @@ const App = () => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu variant="dark">
-          {filterSorts.map((item, index) => (
+          {allFilters.map((item, index) => (
             <Dropdown.Item key={index} onClick={() => setSelectedItemSort(item)}>
               {item}
             </Dropdown.Item>
@@ -162,6 +171,5 @@ const App = () => {
     </div>
   );
 };
-
 
 export default App;
