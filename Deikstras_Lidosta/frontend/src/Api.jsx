@@ -30,9 +30,17 @@ export const getAirportList = async (setAirportList) => {
             airport: 'Antalya (AYT)'
         },
         {
-            id: '46376f6a-fc5a-11ed-be56-0242ac120002',
+            id: 'f7ab82fa-fc5a-11ed-be56-0242ac120002',
             airport: 'Tel Aviv Ben Gurion (TLV)'
         },
+        {
+            id: 'f7ab8746-fc5a-11ed-be56-0242ac120002',
+            airport: 'London Heathrow (LHR)'
+        },
+        {
+            id: 'f7ab8bce-fc5a-11ed-be56-0242ac120002',
+            airport: 'Boston Logan (BOS)'
+        }
       ];
   
       const sortedData = data.sort((a, b) => {
@@ -94,6 +102,13 @@ export const getAirportList = async (setAirportList) => {
             FlightId: "420",
             FromId: "Antalya (AYT)",
             ToId: "Tel Aviv Ben Gurion (TLV)"
+          }
+        ],
+        [
+          {
+            FlightId: "789",
+            FromId: "London Heathrow (LHR)",
+            ToId: "Boston Logan (BOS)"
           }
         ]
       ];

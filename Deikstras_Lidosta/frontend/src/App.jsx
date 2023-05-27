@@ -20,6 +20,7 @@ const App = () => {
   const [flightInfo, setFlightInfo] = useState([]);
   const [selectedFlight, setSelectedFlight] = useState([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
 
   const currentDate = new Date();
@@ -58,6 +59,10 @@ const App = () => {
     setDialogOpen(false);
   };
 
+  const handleButtonClick = () => {
+    setSubmitted(true);
+  };
+
   const filteredOriginList = airportList.filter(item =>
     item.airport.toLowerCase().includes(searchTextOrigin.toLowerCase())
   );
@@ -68,16 +73,6 @@ const App = () => {
 
   const isOriginEmpty = searchTextOrigin.trim() !== '' && filteredOriginList.length === 0;
   const isDestinationEmpty = searchTextDestination.trim() !== '' && filteredDestinationList.length === 0;
-
-  const handleButtonClick = () => {
-    const formData = {
-      origin: selectedItemOrigin,
-      destination: selectedItemDestination,
-      date: selectedDate ? selectedDate.toDateString() : '',
-      sort: selectedItemSort,
-    };
-    setTableData(() => [formData]);
-  };
   
   return (
     <div className="container">
@@ -163,7 +158,7 @@ const App = () => {
       <Button variant="primary" className="selectionItems" onClick={handleButtonClick}>
       Submit
     </Button>
-    {flightInfo.length > 0 && (
+    {submitted && flightInfo.length > 0 && (
       <table className="tabulasstilinsh">
         <thead>
           <tr>
@@ -213,7 +208,7 @@ const App = () => {
               <td>{flight.FlightId}</td>
               <td>{flight.FromId}</td>
               <td>
-                {index == selectedFlight.length - 1 ? (
+                {index === selectedFlight.length - 1 ? (
                   flight.ToId
                 ) : (
                   <>
@@ -225,7 +220,7 @@ const App = () => {
           ))}
         </tbody>
       </table>
-      <button className="modalBtn" onClick={closeDialog}>Close</button>
+      <button className="btn btn-primary modalBtn border-2 border-dark" onClick={closeDialog}>Close</button>
     </Modal>
     </div>
   );
