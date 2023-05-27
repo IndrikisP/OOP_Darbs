@@ -4,7 +4,7 @@ import com.lidosta.Deikstras_Lidosta.model.Airplane;
 import com.lidosta.Deikstras_Lidosta.model.Airport;
 import com.lidosta.Deikstras_Lidosta.model.Flight;
 import com.lidosta.Deikstras_Lidosta.processor.calculator.Calculation;
-import com.lidosta.Deikstras_Lidosta.processor.calculator.PriceDistanceInfo;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.PriceDistanceInfo;
 import com.lidosta.Deikstras_Lidosta.service.AirplaneService;
 import com.lidosta.Deikstras_Lidosta.service.AirportService;
 import com.lidosta.Deikstras_Lidosta.service.FlightService;
@@ -13,9 +13,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * This class is to parse tsv document and put data into DB.

@@ -5,6 +5,7 @@ import com.lidosta.Deikstras_Lidosta.model.Airport;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -28,5 +29,9 @@ public class AirportService {
 
     private Airport checkIfFlightExist(Airport airport) {
         return (Airport) dao.checkIfExist(airport);
+    }
+
+    public List<Airport> getAllAirports(){
+        return dao.selectAll();
     }
 }

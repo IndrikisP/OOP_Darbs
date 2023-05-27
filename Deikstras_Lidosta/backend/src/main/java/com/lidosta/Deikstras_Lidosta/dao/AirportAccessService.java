@@ -1,11 +1,9 @@
 package com.lidosta.Deikstras_Lidosta.dao;
 
-import com.lidosta.Deikstras_Lidosta.model.Airplane;
 import com.lidosta.Deikstras_Lidosta.model.Airport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +35,15 @@ public class AirportAccessService implements Dao<Airport>{
 
     @Override
     public List<Airport> selectAll() {
-        return null;
+        final String sql = "SELECT * FROM airports";
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            return new Airport(
+                    UUID.fromString(resultSet.getString("airport_id")),
+                    resultSet.getString("name"),
+                    resultSet.getString("code"),
+                    resultSet.getString("city_name")
+            );
+        });
     }
 
     @Override

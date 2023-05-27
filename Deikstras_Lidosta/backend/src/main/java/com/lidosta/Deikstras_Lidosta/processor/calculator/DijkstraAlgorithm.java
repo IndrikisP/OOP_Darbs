@@ -1,5 +1,7 @@
 package com.lidosta.Deikstras_Lidosta.processor.calculator;
 
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.PriceDistanceInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
