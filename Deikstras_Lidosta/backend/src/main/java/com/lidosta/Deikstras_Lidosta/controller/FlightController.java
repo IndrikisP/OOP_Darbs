@@ -4,13 +4,11 @@ import com.lidosta.Deikstras_Lidosta.model.Flight;
 import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInfo;
 import com.lidosta.Deikstras_Lidosta.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,7 +35,6 @@ public class FlightController {
     public List<Flight> getShortestFlights(@RequestParam("fromid") UUID fromId,
                                            @RequestParam("toid") UUID toId) {
         return flightService.getShortestFlight(fromId, toId);
-
     }
 
     @GetMapping(value = "/get/paths")
@@ -47,7 +44,6 @@ public class FlightController {
                                                @RequestParam("parameter") int parameter) {
         if(parameter == 0) parameter = 9999;
         return flightService.getAllPaths(fromId, toId, name,parameter);
-
     }
 
     @GetMapping(value = "/get/allFlights")
