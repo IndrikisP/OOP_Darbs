@@ -1,6 +1,7 @@
 package com.lidosta.Deikstras_Lidosta.controller;
 
 import com.lidosta.Deikstras_Lidosta.model.Flight;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInfo;
 import com.lidosta.Deikstras_Lidosta.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,10 +41,11 @@ public class FlightController {
     }
 
     @GetMapping(value = "/get/paths")
-    public List<List<Flight>> getAllPathsFromTo(@RequestParam("fromid") UUID fromId,
-                                                @RequestParam("toid") UUID toId,
-                                                @RequestParam("paramname") String name,
-                                                @RequestParam("parameter") int parameter) {
+    public List<FlightsInfo> getAllPathsFromTo(@RequestParam("fromid") UUID fromId,
+                                               @RequestParam("toid") UUID toId,
+                                               @RequestParam("paramname") String name,
+                                               @RequestParam("parameter") int parameter) {
+        if(parameter == 0) parameter = 9999;
         return flightService.getAllPaths(fromId, toId, name,parameter);
 
     }

@@ -1,6 +1,7 @@
 package com.lidosta.Deikstras_Lidosta.dao;
 
 import com.lidosta.Deikstras_Lidosta.model.Flight;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -107,11 +108,15 @@ public class FlightAccessService implements Dao<Flight> {
     }
 
     @Override
-    public List<List<Flight>> selectPaths(List<List<UUID>> flightPaths) {
-        List<List<Flight>> result = new ArrayList<>();
-        for (List<UUID> flights : flightPaths) {
+    public List<List<Flight>> selectPaths(List<List<UUID>> t) {
+        return null;
+    }
+
+    public List<FlightsInfo> selectPaths2(List<FlightsInfo> flightPaths) {
+        List<FlightsInfo> result = new ArrayList<>();
+        for (FlightsInfo flights : flightPaths) {
             List<Flight> orderedFlights = new ArrayList<>();
-            for (UUID id : flights) {
+            for (UUID id : flights.getPath()) {
 
                 final String sql = "SELECT * FROM flights WHERE flight_id = ? ";
 
@@ -130,10 +135,9 @@ public class FlightAccessService implements Dao<Flight> {
                     );
                 }, id));
             }
-            result.add(orderedFlights);
+            result.add(new FlightsInfo(flights.getDistance(),flights.getPrice(),null,orderedFlights));
+            //result.add(orderedFlights);
         }
         return result;
     }
-
-
 }

@@ -1,6 +1,7 @@
 package com.lidosta.Deikstras_Lidosta.dao;
 
 import com.lidosta.Deikstras_Lidosta.model.Airport;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -78,6 +79,11 @@ public class AirportAccessService implements Dao<Airport>{
 
     @Override
     public List<List<Airport>> selectPaths(List<List<UUID>> t) {
+        return null;
+    }
+
+    @Override
+    public List<FlightsInfo> selectPaths2(List<FlightsInfo> t) {
         return null;
     }
 }

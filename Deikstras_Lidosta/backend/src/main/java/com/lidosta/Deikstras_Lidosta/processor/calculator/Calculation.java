@@ -1,5 +1,6 @@
 package com.lidosta.Deikstras_Lidosta.processor.calculator;
 
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInfo;
 import com.lidosta.Deikstras_Lidosta.processor.calculator.response.PriceDistanceInfo;
 import org.springframework.stereotype.Service;
 
@@ -153,7 +154,7 @@ public class Calculation {
         return shortestDistance[x][y].size() > 0 ? shortestDistance[x][y].get(0).getPath() : null;
     }
 
-    public List<List<UUID>> getAllPathsFromTo(UUID from, UUID to, String parameterName, int parameter) {
+    public List<FlightsInfo> getAllPathsFromTo(UUID from, UUID to, String parameterName, int parameter) {
         int x = 0;
         int y = 0;
         for (int i = 0; i < verticleCount; i++) {
@@ -164,14 +165,14 @@ public class Calculation {
                 y = i;
             }
         }
-        List<List<UUID>> paths = new ArrayList<>();
+        List<FlightsInfo> paths = new ArrayList<>();
 
         switch (parameterName) {
             case "distance":
                 if (allPaths[x][y].size() > 0) {
                     allPaths[x][y].forEach(info -> {
                         if (info.getDistance() <= parameter) {
-                            paths.add(info.getPath());
+                            paths.add(new FlightsInfo(info.getDistance(),info.getPrice(),info.getPath(),null));
                         }
                     });
                 }
@@ -180,7 +181,7 @@ public class Calculation {
                 if (allPaths[x][y].size() > 0) {
                     allPaths[x][y].forEach(info -> {
                         if (info.getPrice() <= parameter) {
-                            paths.add(info.getPath());
+                            paths.add(new FlightsInfo(info.getDistance(),info.getPrice(),info.getPath(),null));
                         }
                     });
                 }
@@ -189,7 +190,7 @@ public class Calculation {
                 if (allPaths[x][y].size() > 0) {
                     allPaths[x][y].forEach(info -> {
                         if (info.getPath().size() <= parameter) {
-                            paths.add(info.getPath());
+                            paths.add(new FlightsInfo(info.getDistance(),info.getPrice(),info.getPath(),null));
                         }
                     });
                 }

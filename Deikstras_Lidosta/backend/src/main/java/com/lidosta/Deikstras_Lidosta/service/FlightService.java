@@ -3,6 +3,7 @@ package com.lidosta.Deikstras_Lidosta.service;
 import com.lidosta.Deikstras_Lidosta.dao.Dao;
 import com.lidosta.Deikstras_Lidosta.model.Flight;
 import com.lidosta.Deikstras_Lidosta.processor.calculator.Calculation;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInfo;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,7 @@ public class FlightService {
         return (List<Flight>) dao.selectByIds(Calculation.getInstance().getShortestDistanceFromTo(flightFrom, flightTo));
     }
 
-    public List<List<Flight>> getAllPaths(UUID flightFrom, UUID flightTo,String name, int parameter) {
-        return (List<List<Flight>>) dao.selectPaths(Calculation.getInstance().getAllPathsFromTo(flightFrom, flightTo,name, parameter));
+    public List<FlightsInfo> getAllPaths(UUID flightFrom, UUID flightTo, String name, int parameter) {
+        return (List<FlightsInfo>) dao.selectPaths2(Calculation.getInstance().getAllPathsFromTo(flightFrom, flightTo,name, parameter));
     }
 }
