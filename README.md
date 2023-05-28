@@ -16,14 +16,18 @@ Lietojumprogrammas projekts tika izgatavots DatZ4019 — Objektorientētā progr
 
 ## Projekta iedarbināšanas instrukcija
 Lai palaistu *back-end*:
-1) Atvērt projektu `Deikstras_Lidosta` IntelliJ Idea vai Eclipse vai jebkurā citā izstrādes rīkā.
-2) Run projektu.
+1) Nepieciešams installet Postgre klientu (download: https://www.postgresql.org/download/) un palaist skriptus iekš `pgAdmin` datu bāzes klienta iekš mapītes `Deikstras_Lidosta/db/PostgrSql`
+2) Atvērt projektu `Deikstras_Lidosta` IntelliJ Idea vai Eclipse vai jebkurā citā izstrādes rīkā.
+3) `Run` projektu.
 
 Lai palaistu *front-end*:
 1) Izmantojot termināli, ieejam mapītē `cd Deikstras_Lidosta/frontend/`
 2) `npm i`, lai uzinstallētu nepieciešamās React.js izmantotās pakotnes (komponentes & bibliotēkas)
 3) `npm run start`, lai uzsāktu lietotnes saskarnes projektu
 4) `http://localhost:3000/` (default port: 3000), lai no tīmeklī varētu izmantot lietotni.
+
+### NOTE!
+Kad tiek palaists *front-end*, tad pievērst uzmanību, ka ir jāaugšupielādē sākotnējie dati caur `Upload File` pogu. Augšupielādējamo faila nosaukums ir `origin_data_input.tsv` no mapītes `Deikstras_Lidosta`.
 
 ## Lietotāju saskarne
 ![Reisa detalizētais skats](https://media.discordapp.net/attachments/1104045709151457384/1112382847710396447/image.png?width=708&height=676)
