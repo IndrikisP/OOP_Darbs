@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './resources/css/App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Modal from 'react-modal';
-import {getAirportList, getAllFilters, getAllFlights} from './Api.jsx';
+import {getAirportList, getAllFilters, getAllFlights, uploadDoc} from './Api.jsx';
 
 const App = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -25,7 +25,17 @@ const App = () => {
   const [flightData,setFlightData] = useState([]);
   const [airportMap,setAirportMap] = useState([]);
   const [paramValue, setParamValue] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
 
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+  const handleUpload = async () => {
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    await uploadDoc(formData);
+    window.location.reload();
+  }
   const handleParamValueChange = (event) => { setParamValue(Number(event.target.value)); };
 
 
@@ -86,6 +96,10 @@ const App = () => {
   return (
     <div className="container">
       <h1 className="topcenterHead">Djikstra Airport ✈️</h1>
+      <div>
+        <input type="file" onChange={handleFileChange} />
+        <button onClick={handleUpload}>Upload</button>
+      </div>
       <div className="dropdownContainer">
         <Dropdown className='selectionItems'>
           <Dropdown.Toggle variant="secondary">
