@@ -44,3 +44,13 @@ export const getAllFlights = async (selectedItemOrigin,selectedItemDestination,s
         console.error("Error fetching flights data:", error);
     }
 }
+
+export const uploadDoc = async (formData) =>{
+    try{
+        const resp = await Axios.post('http://localhost:8080/add/document',formData);
+        console.log(resp);
+    }
+    catch (error) {
+        console.error("Error uploading data:", error);
+    }
+}
