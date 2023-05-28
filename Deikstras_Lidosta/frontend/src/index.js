@@ -3,11 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import AdditionalInfo from "./AdditionalInfo";
+import {selectedInfo} from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+        <Routes>
+            <Route index element={<App></App>}></Route>
+            <Route path="info/:flightId" element={<AdditionalInfo></AdditionalInfo>}></Route>
+        </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

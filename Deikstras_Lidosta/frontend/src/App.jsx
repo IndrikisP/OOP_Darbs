@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Dropdown, FormControl, Button, Form } from 'react-bootstrap';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './resources/css/App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Modal from 'react-modal';
 import {getAirportList, getAllFilters, getAllFlights, uploadDoc} from './Api.jsx';
+import AdditionalInfo from './AdditionalInfo';
+import {useNavigate} from "react-router-dom";
 
 const App = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -26,6 +27,7 @@ const App = () => {
   const [airportMap,setAirportMap] = useState([]);
   const [paramValue, setParamValue] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedInfo, setSelectedInfo] = useState({});
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -50,7 +52,7 @@ const App = () => {
   useEffect(() => {
     getAllFlights(selectedItemOrigin,selectedItemDestination,selectedParam,paramValue,setFlightData,airportList,setAirportMap)
   }, [])
-  
+
   const handleSearchOrigin = (event) => {
     setSearchTextOrigin(event.target.value);
   };
@@ -81,6 +83,17 @@ const App = () => {
   const handleSelectedParam = () => {
     setIsSelectedParam(true);
   };
+  const history = useNavigate();
+  const handleInfoClick = (array) => {
+    console.log(array);
+    setSelectedInfo(array);
+    console.log(selectedInfo);
+    //history('/info/123');
+  };
+  useEffect(() => {
+    console.log(selectedInfo); // Logs the updated state value
+  }, [selectedInfo]);
+
 
   const filteredOriginList = airportList.filter(item =>
     item.cityName.toLowerCase().includes(searchTextOrigin.toLowerCase())
@@ -184,6 +197,7 @@ const App = () => {
             <th>Stopovers</th>
             <th>Total price</th>
             <th>Total distance</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -197,13 +211,17 @@ const App = () => {
                 <td onClick={hasStopovers ? () => openDialog(array.flight) : null}>
                   {hasStopovers ? `${stopoverCount} stopover${stopoverCount === 1 ? '' : 's'}` : 'Non-stop'}
                 </td>
-                <td>{array.price}</td>
-                <td>{array.distance}</td>
+                <td>{array.price}€</td>
+                <td>{array.distance}km</td>
+                <td onClick={()=>handleInfoClick(array)}>Show additional info</td>
               </tr>
             );
           })}
         </tbody>
       </table>
+    )}
+    {submitted && flightData.length < 1 &&(
+        <h1>Flight data not found</h1>
     )}
 
     <Modal
@@ -223,6 +241,7 @@ const App = () => {
             <th>To ID</th>
             <th>Price</th>
             <th>Distance</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -239,8 +258,9 @@ const App = () => {
                   </>
                 )}
               </td>
-              <td>{flight.price}</td>
-              <td>{flight.distance}</td>
+              <td>{flight.price}€</td>
+              <td>{flight.distance}km</td>
+              <td onClick={handleInfoClick}>Show additional info</td>
             </tr>
           ))}
         </tbody>

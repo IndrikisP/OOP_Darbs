@@ -30,7 +30,7 @@ export const getAllFlights = async (selectedItemOrigin,selectedItemDestination,s
         if(paramValue === '') paramValue = 0;
         const resp = await Axios.get('http://localhost:8080/get/paths?fromid='+selectedItemOrigin+'&toid='+selectedItemDestination+'&paramname='+selectedParam+'&parameter='+paramValue);
         const data = resp.data;
-        //console.log(data);
+        console.log(data);
         const airportMap = new Map();
         //console.log(airportList);
         for (const airport of airportList) {
