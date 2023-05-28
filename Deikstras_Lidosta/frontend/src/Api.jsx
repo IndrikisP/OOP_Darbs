@@ -4,7 +4,6 @@ export const getAirportList = async (setAirportList) => {
     try {
         const resp = await Axios.get("http://localhost:8080/get/allAirports");
         const data = resp.data;
-        //console.log(data);
         const sortedData = data.sort((a, b) => {
             const airportA = a.cityName.toLowerCase();
             const airportB = b.cityName.toLowerCase();
@@ -28,18 +27,15 @@ export const getAllFilters = (setAllFilters) => {
 export const getAllFlights = async (selectedItemOrigin,selectedItemDestination,selectedParam,paramValue,setFlightData,airportList,setAirportMap) => {
     try {
         if(paramValue === '') paramValue = 0;
-        const resp = await Axios.get('http://localhost:8080/get/paths?fromid='+selectedItemOrigin+'&toid='+selectedItemDestination+'&paramname='+selectedParam+'&parameter='+paramValue);
+        const resp = await Axios.get('http://localhost:8080/get/paths?cityFrom='+selectedItemOrigin+'&cityTo='+selectedItemDestination+'&filterName='+selectedParam+'&filterValue='+paramValue);
         const data = resp.data;
         console.log(data);
         const airportMap = new Map();
-        //console.log(airportList);
         for (const airport of airportList) {
             airportMap.set(airport.airportId, airport.cityName);
         }
         setAirportMap(airportMap);
         setFlightData(data);
-
-        //console.log(airportMap);
     } catch (error) {
         console.error("Error fetching flights data:", error);
     }

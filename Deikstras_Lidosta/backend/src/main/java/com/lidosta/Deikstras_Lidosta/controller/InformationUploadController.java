@@ -37,15 +37,4 @@ public class InformationUploadController {
         }
         informationService.uploadInformation(file);
     }
-
-    //method for testing cache
-    @PostMapping(value = "/add/number")
-    public void add(@RequestParam("num") String num) throws IOException {
-        informationService.getListByInputParameters(num);
-    }
-
-    @PostMapping(value = "/add/show")
-    public void showGraph() {
-        Calculation.getInstance().printGraph();
-    }
 }

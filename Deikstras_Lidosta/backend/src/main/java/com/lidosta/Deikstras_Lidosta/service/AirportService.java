@@ -24,14 +24,13 @@ public class AirportService {
         }
         airport.setAirportId(UUID.randomUUID());
         return (Airport) dao.insert(airport);
-
     }
 
     private Airport checkIfFlightExist(Airport airport) {
         return (Airport) dao.checkIfExist(airport);
     }
 
-    public List<Airport> getAllAirports(){
+    public List<Airport> getAllAirports() {
         return dao.selectAll();
     }
 }

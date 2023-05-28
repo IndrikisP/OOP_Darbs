@@ -4,7 +4,7 @@ import com.lidosta.Deikstras_Lidosta.model.Airplane;
 import com.lidosta.Deikstras_Lidosta.model.Airport;
 import com.lidosta.Deikstras_Lidosta.model.Flight;
 import com.lidosta.Deikstras_Lidosta.processor.calculator.Calculation;
-import com.lidosta.Deikstras_Lidosta.processor.calculator.response.PriceDistanceInfo;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInternalInfo;
 import com.lidosta.Deikstras_Lidosta.service.AirplaneService;
 import com.lidosta.Deikstras_Lidosta.service.AirportService;
 import com.lidosta.Deikstras_Lidosta.service.FlightService;
@@ -22,31 +22,11 @@ import java.util.Date;
 
 public class ParserTsv {
 
-    static int rowCount = 0;
-
     public void parse(File file,
                       AirportService airportService,
                       AirplaneService airplaneService,
                       FlightService flightService) {
         Calculation calculation = Calculation.getInstance();
-        //1 airplanetype,
-        //2 airplaneModel
-        //3 airplanecapacity,
-
-        //3 airportfromcode,
-        //4 airportfromcity_name,
-        //5 airportfromname,
-
-        //7 airporttocode,
-        //8 airporttocity_name,
-        //9 airporttoname,
-
-        //10 flightdistance,
-        //11 flightprice,
-        //12 flighttime_of_arrival,
-        //13 flighttime_of_departure,
-        //14 flighttimezone,
-        //15 flightcompany
         final String pattern = "yyyy-mm-dd";
         SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
         try (BufferedReader TSVReader = new BufferedReader(new FileReader(file))) {
@@ -68,14 +48,12 @@ public class ParserTsv {
                         row[13],
                         tmpAirplane.getAirplaneId(),
                         row[14]), flightService);
-                PriceDistanceInfo info = new PriceDistanceInfo(tmpFlight.getFlightId(), price, distance);
+                FlightsInternalInfo info = new FlightsInternalInfo(tmpFlight.getFlightId(), price, distance);
                 calculation.addRecordToGraph(tmpAirportFrom.getAirportId(), tmpAirportTo.getAirportId(), info);
-                rowCount++;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("Sum of not unique row count: " + rowCount);
     }
 
     public Airplane getPlane(Airplane airplane, AirplaneService airplaneService) {

@@ -16,6 +16,7 @@ public class AirportController {
     public AirportController(AirportService airportService) {
         this.airportService = airportService;
     }
+
     @GetMapping(value = "/get/allAirports")
     public List<Airport> getAirports() {
         return airportService.getAllAirports();

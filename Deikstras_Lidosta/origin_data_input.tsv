@@ -1,21 +1,20 @@
-Boeing 747	747-400	416	LAX	Los Angeles	Los Angeles International Airport	JFK	New York	John F. Kennedy International Airport	1000	1000	2023-06-22	2023-06-23	GMT-8	Airline X
-Boeing 747	747-400	416	LAX	Los Angeles	Los Angeles International Airport	LHR	London	Heathrow Airport	500	500	2023-06-22	2023-06-23	GMT-5	Airline Y
-Boeing 747	747-400	416	LAX	Los Angeles	Los Angeles International Airport	CDG	Paris	Charles de Gaulle Airport	700	1000	2023-06-22	2023-06-23	GMT-8	Airline X
-Boeing 747	747-400	416	LAX	Los Angeles	Los Angeles International Airport	ORD	Chicago	O'Hare International Airport	100	1000	2023-06-22	2023-06-23	GMT-8	Airline X
-Airbus A320	A320neo	180	JFK	New York	John F. Kennedy International Airport	LAX	Los Angeles	Los Angeles International Airport	1000	500	2023-06-22	2023-06-23	GMT-5	Airline Y
-Airbus A320	A320neo	180	JFK	New York	John F. Kennedy International Airport	LHR	London	Heathrow Airport	200	500	2023-06-22	2023-06-23	GMT-5	Airline Y
-Airbus A320	A320neo	180	JFK	New York	John F. Kennedy International Airport	CDG	Paris	Charles de Gaulle Airport	300	500	2023-06-22	2023-06-23	GMT-5	Airline Y
-Airbus A320	A320neo	180	JFK	New York	John F. Kennedy International Airport	ORD	Chicago	O'Hare International Airport	800	500	2023-06-22	2023-06-23	GMT-5	Airline Y
-Boeing 787	787-9	242	LHR	London	Heathrow Airport	LAX	Los Angeles	Los Angeles International Airport	500	800	2023-06-22	2023-06-23	GMT+0	Airline Z
-Boeing 787	787-9	242	LHR	London	Heathrow Airport	JFK	New York	John F. Kennedy International Airport	200	800	2023-06-22	2023-06-23	GMT+0	Airline Z
-Boeing 787	787-9	242	LHR	London	Heathrow Airport	CDG	Paris	Charles de Gaulle Airport	200	800	2023-06-22	2023-06-23	GMT+0	Airline Z
-Boeing 787	787-9	242	LHR	London	Heathrow Airport	ORD	Chicago	O'Hare International Airport	2000	800	2023-06-22	2023-06-23	GMT+0	Airline Z
-Airbus A380	A380-800	853	CDG	Paris	Charles de Gaulle Airport	LAX	Los Angeles	Los Angeles International Airport	700	1200	2023-06-22	2023-06-23	GMT+1	Airline B
-Airbus A380	A380-800	853	CDG	Paris	Charles de Gaulle Airport	JFK	New York	John F. Kennedy International Airport	300	1200	2023-06-22	2023-06-23	GMT+1	Airline B
-Airbus A380	A380-800	853	CDG	Paris	Charles de Gaulle Airport	LHR	London	Heathrow Airport	200	1200	2023-06-22	2023-06-23	GMT+1	Airline B
-Airbus A380	A380-800	853	CDG	Paris	Charles de Gaulle Airport	ORD	Chicago	O'Hare International Airport	400	1200	2023-06-22	2023-06-23	GMT+1	Airline B
-Embraer E175	E175-E2	76	ORD	Chicago	O'Hare International Airport	LAX	Los Angeles	Los Angeles International Airport	100	300	2023-06-22	2023-06-23	GMT-6	Airline A
-Embraer E175	E175-E2	76	ORD	Chicago	O'Hare International Airport	JFK	New York	John F. Kennedy International Airport	800	300	2023-06-22	2023-06-23	GMT-6	Airline A
-Embraer E175	E175-E2	76	ORD	Chicago	O'Hare International Airport	LHR	London	Heathrow Airport	2000	300	2023-06-22	2023-06-23	GMT-6	Airline A
-Embraer E175	E175-E2	76	ORD	Chicago	O'Hare International Airport	CDG	Paris	Charles de Gaulle Airport	400	300	2023-06-22	2023-06-23	GMT-6	Airline A
-
+Boeing 747	747-400	416	LAX	Los Angeles	Los Angeles International Airport	JFK	New York	John F. Kennedy International Airport	1000	1000	2023-07-02	2023-07-02	GMT-8	Airline X
+Boeing 747	747-400	416	LAX	Los Angeles	Los Angeles International Airport	LHR	London	Heathrow Airport	500	500	2023-07-02	2023-07-02	GMT-5	Airline Y
+Boeing 747	747-400	416	LAX	Los Angeles	Los Angeles International Airport	CDG	Paris	Charles de Gaulle Airport	700	1000	2023-07-02	2023-07-02	GMT-8	Airline X
+Boeing 747	747-400	416	LAX	Los Angeles	Los Angeles International Airport	ORD	Chicago	O'Hare International Airport	100	1000	2023-07-02	2023-07-02	GMT-8	Airline X
+Airbus A320	A320neo	180	JFK	New York	John F. Kennedy International Airport	LAX	Los Angeles	Los Angeles International Airport	1000	500	2023-07-02	2023-07-02	GMT-5	Airline Y
+Airbus A320	A320neo	180	JFK	New York	John F. Kennedy International Airport	LHR	London	Heathrow Airport	200	500	2023-07-02	2023-07-02	GMT-5	Airline Y
+Airbus A320	A320neo	180	JFK	New York	John F. Kennedy International Airport	CDG	Paris	Charles de Gaulle Airport	300	500	2023-07-02	2023-07-02	GMT-5	Airline Y
+Airbus A320	A320neo	180	JFK	New York	John F. Kennedy International Airport	ORD	Chicago	O'Hare International Airport	800	500	2023-07-02	2023-07-02	GMT-5	Airline Y
+Boeing 787	787-9	242	LHR	London	Heathrow Airport	LAX	Los Angeles	Los Angeles International Airport	500	800	2023-07-02	2023-07-02	GMT+0	Airline Z
+Boeing 787	787-9	242	LHR	London	Heathrow Airport	JFK	New York	John F. Kennedy International Airport	200	800	2023-07-02	2023-07-02	GMT+0	Airline Z
+Boeing 787	787-9	242	LHR	London	Heathrow Airport	CDG	Paris	Charles de Gaulle Airport	200	800	2023-07-02	2023-07-02	GMT+0	Airline Z
+Boeing 787	787-9	242	LHR	London	Heathrow Airport	ORD	Chicago	O'Hare International Airport	2000	800	2023-07-02	2023-07-02	GMT+0	Airline Z
+Airbus A380	A380-800	853	CDG	Paris	Charles de Gaulle Airport	LAX	Los Angeles	Los Angeles International Airport	700	1200	2023-07-02	2023-07-02	GMT+1	Airline B
+Airbus A380	A380-800	853	CDG	Paris	Charles de Gaulle Airport	JFK	New York	John F. Kennedy International Airport	300	1200	2023-07-02	2023-07-02	GMT+1	Airline B
+Airbus A380	A380-800	853	CDG	Paris	Charles de Gaulle Airport	LHR	London	Heathrow Airport	200	1200	2023-07-02	2023-07-02	GMT+1	Airline B
+Airbus A380	A380-800	853	CDG	Paris	Charles de Gaulle Airport	ORD	Chicago	O'Hare International Airport	400	1200	2023-07-02	2023-07-02	GMT+1	Airline B
+Embraer E175	E175-E2	76	ORD	Chicago	O'Hare International Airport	LAX	Los Angeles	Los Angeles International Airport	100	300	2023-07-02	2023-07-02	GMT-6	Airline A
+Embraer E175	E175-E2	76	ORD	Chicago	O'Hare International Airport	JFK	New York	John F. Kennedy International Airport	800	300	2023-07-02	2023-07-02	GMT-6	Airline A
+Embraer E175	E175-E2	76	ORD	Chicago	O'Hare International Airport	LHR	London	Heathrow Airport	2000	300	2023-07-02	2023-07-02	GMT-6	Airline A
+Embraer E175	E175-E2	76	ORD	Chicago	O'Hare International Airport	CDG	Paris	Charles de Gaulle Airport	400	300	2023-07-02	2023-07-02	GMT-6	Airline A

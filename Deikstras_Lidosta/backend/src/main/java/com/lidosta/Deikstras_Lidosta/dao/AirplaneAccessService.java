@@ -1,11 +1,11 @@
 package com.lidosta.Deikstras_Lidosta.dao;
 
 import com.lidosta.Deikstras_Lidosta.model.Airplane;
-import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,13 +35,17 @@ public class AirplaneAccessService implements Dao<Airplane> {
 
     @Override
     public List<Airplane> selectAll() {
-        return null;
+        List<Airplane> airplanes = new ArrayList<>();
+        final String sql ="SELECT * FROM airplanes";
+        List<Airplane> results = jdbcTemplate.query(sql, (resultSet, i) -> {
+            return new Airplane(UUID.fromString(resultSet.getString("airplane_id")),
+                    resultSet.getString("type"),
+                    resultSet.getString("model"),
+                    resultSet.getInt("passenger_count"));
+        });
+        return airplanes;
     }
 
-    @Override
-    public Airplane selectById(UUID id) {
-        return null;
-    }
 
     @Override
     public Airplane checkIfExist(Airplane airplane) {
@@ -62,21 +66,6 @@ public class AirplaneAccessService implements Dao<Airplane> {
         } else {
             return results.get(0);
         }
-    }
-
-    @Override
-    public List<Airplane> selectByIds(List<UUID> t) {
-        return null;
-    }
-
-    @Override
-    public List<List<Airplane>> selectPaths(List<List<UUID>> t) {
-        return null;
-    }
-
-    @Override
-    public List<FlightsInfo> selectPaths2(List<FlightsInfo> t) {
-        return null;
     }
 
 }

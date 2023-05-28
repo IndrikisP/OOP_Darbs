@@ -1,6 +1,6 @@
 package com.lidosta.Deikstras_Lidosta.processor.calculator;
 
-import com.lidosta.Deikstras_Lidosta.processor.calculator.response.PriceDistanceInfo;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInternalInfo;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,9 +11,9 @@ import java.util.UUID;
  * This class is used to find all possible ways to reach target airport.
  */
 public class AllPathsAlgorithm {
-    private List<PriceDistanceInfo>[][] flightGraph;
+    private List<FlightsInternalInfo>[][] flightGraph;
 
-    public List<PriceDistanceInfo>[][] getAllFlights(List<PriceDistanceInfo>[][] graph) {
+    public List<FlightsInternalInfo>[][] getAllFlights(List<FlightsInternalInfo>[][] graph) {
         flightGraph = new List[graph.length][graph.length];
         for (int i = 0; i < graph.length; i++) {
             for (int j = 0; j < graph.length; j++) {
@@ -33,7 +33,7 @@ public class AllPathsAlgorithm {
         }
         for (int i = 0; i < graph.length; i++) {
             for (int j = 0; j < graph.length; j++) {
-                flightGraph[i][j].sort(Comparator.comparing(PriceDistanceInfo::getDistance));
+                flightGraph[i][j].sort(Comparator.comparing(FlightsInternalInfo::getDistance));
             }
         }
         return flightGraph;
@@ -41,20 +41,20 @@ public class AllPathsAlgorithm {
 
     public void getAllPaths(int s,
                             int targetIndex,
-                            List<PriceDistanceInfo>[][] graph,
+                            List<FlightsInternalInfo>[][] graph,
                             boolean[] isVisited,
                             List<UUID> localPathList,
                             int distance,
                             int rowIndex,
                             float price,
-                            int x, int y) {
+                            int previousX, int previousY) {
         if (s != rowIndex && graph[s][targetIndex].size() > 0) {
-            localPathList.add(graph[x][y].get(0).getFlightId());
+            localPathList.add(graph[previousX][previousY].get(0).getFlightId());
             System.out.println();
         }
         if (s == targetIndex) {
             List<UUID> copiedPathList = new ArrayList<>(localPathList);
-            PriceDistanceInfo info = new PriceDistanceInfo(null, price, distance, copiedPathList);
+            FlightsInternalInfo info = new FlightsInternalInfo(null, price, distance, copiedPathList);
             flightGraph[rowIndex][s].add(info);
 
             return;
@@ -70,7 +70,6 @@ public class AllPathsAlgorithm {
                     localPathList.remove(localPathList.size() - 1);
                 }
             }
-
         }
 
         isVisited[s] = false;

@@ -1,16 +1,13 @@
 package com.lidosta.Deikstras_Lidosta.dao;
 
 import com.lidosta.Deikstras_Lidosta.model.Flight;
-import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInfo;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsExternalInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.UUID;
 
 @Repository("postgres_flight")
@@ -68,18 +65,6 @@ public class FlightAccessService implements Dao<Flight> {
         });
     }
 
-    @Override
-    public Flight selectById(UUID id) {
-        return null;
-    }
-
-    @Override
-    public Flight checkIfExist(Flight object) {
-        //TODO Implement method
-        return null;
-    }
-
-    @Override
     public List<Flight> selectByIds(List<UUID> ids) {
         List<String> uuidStrings = new ArrayList<>();
         for (UUID id : ids) {
@@ -107,14 +92,10 @@ public class FlightAccessService implements Dao<Flight> {
         });
     }
 
-    @Override
-    public List<List<Flight>> selectPaths(List<List<UUID>> t) {
-        return null;
-    }
 
-    public List<FlightsInfo> selectPaths2(List<FlightsInfo> flightPaths) {
-        List<FlightsInfo> result = new ArrayList<>();
-        for (FlightsInfo flights : flightPaths) {
+    public List<FlightsExternalInfo> selectPaths(List<FlightsExternalInfo> flightPaths) {
+        List<FlightsExternalInfo> result = new ArrayList<>();
+        for (FlightsExternalInfo flights : flightPaths) {
             List<Flight> orderedFlights = new ArrayList<>();
             for (UUID id : flights.getPath()) {
 
@@ -135,9 +116,13 @@ public class FlightAccessService implements Dao<Flight> {
                     );
                 }, id));
             }
-            result.add(new FlightsInfo(flights.getDistance(),flights.getPrice(),null,orderedFlights));
-            //result.add(orderedFlights);
+            result.add(new FlightsExternalInfo(flights.getDistance(),flights.getPrice(),null,orderedFlights));
         }
         return result;
+    }
+
+    @Override
+    public Flight checkIfExist(Flight object) {
+        return null;
     }
 }

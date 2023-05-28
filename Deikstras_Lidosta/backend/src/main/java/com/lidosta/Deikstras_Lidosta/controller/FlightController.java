@@ -1,11 +1,9 @@
 package com.lidosta.Deikstras_Lidosta.controller;
 
-import com.lidosta.Deikstras_Lidosta.model.Flight;
-import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInfo;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsExternalInfo;
 import com.lidosta.Deikstras_Lidosta.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,33 +19,12 @@ public class FlightController {
         this.flightService = flightService;
     }
 
-    @PostMapping(value = "/add/flights")
-    public Flight addFlight(@RequestParam("timezone") String timezone,
-                            @RequestParam("company") String company) {
-        Flight flight = new Flight();
-        flight.setTimeZone(timezone);
-        flight.setCompany(company);
-        return flightService.addFlight(flight);
-
-    }
-
-    @GetMapping(value = "/get/flights")
-    public List<Flight> getShortestFlights(@RequestParam("fromid") UUID fromId,
-                                           @RequestParam("toid") UUID toId) {
-        return flightService.getShortestFlight(fromId, toId);
-    }
-
     @GetMapping(value = "/get/paths")
-    public List<FlightsInfo> getAllPathsFromTo(@RequestParam("fromid") UUID fromId,
-                                               @RequestParam("toid") UUID toId,
-                                               @RequestParam("paramname") String name,
-                                               @RequestParam("parameter") int parameter) {
-        if(parameter == 0) parameter = 9999;
-        return flightService.getAllPaths(fromId, toId, name,parameter);
-    }
-
-    @GetMapping(value = "/get/allFlights")
-    public List<Flight> getFlights() {
-        return flightService.getAllFlights();
+    public List<FlightsExternalInfo> getAllPathsFromTo(@RequestParam("cityFrom") UUID cityFromId,
+                                                       @RequestParam("cityTo") UUID cityToId,
+                                                       @RequestParam("filterName") String filterName,
+                                                       @RequestParam("filterValue") int filterValue) {
+        if(filterValue == 0) filterValue = 9999;
+        return flightService.getAllPaths(cityFromId, cityToId, filterName,filterValue);
     }
 }

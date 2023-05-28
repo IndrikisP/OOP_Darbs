@@ -1,9 +1,10 @@
 package com.lidosta.Deikstras_Lidosta.service;
 
 import com.lidosta.Deikstras_Lidosta.dao.Dao;
+import com.lidosta.Deikstras_Lidosta.dao.FlightAccessService;
 import com.lidosta.Deikstras_Lidosta.model.Flight;
 import com.lidosta.Deikstras_Lidosta.processor.calculator.Calculation;
-import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInfo;
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsExternalInfo;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,11 @@ import java.util.UUID;
 public class FlightService {
     private final Dao dao;
     public static int count = 0;
+    private final FlightAccessService flightAccessService;
 
-    public FlightService(@Qualifier("postgres_flight") Dao dao) {
+    public FlightService(@Qualifier("postgres_flight") Dao dao, FlightAccessService flightAccessService) {
         this.dao = dao;
+        this.flightAccessService = flightAccessService;
     }
 
     public Flight addFlight(Flight flight) {
@@ -37,14 +40,11 @@ public class FlightService {
         return (Flight) dao.checkIfExist(flight);
     }
 
-    public List<Flight> getShortestFlight(UUID flightFrom, UUID flightTo) {
-        return (List<Flight>) dao.selectByIds(Calculation.getInstance().getShortestDistanceFromTo(flightFrom, flightTo));
-    }
 
     @Cacheable(value = "flightInput", key = "#flightFrom.toString() + '_' + #flightTo.toString() + '_' + #name + '_' + #parameter")
-    public List<FlightsInfo> getAllPaths(UUID flightFrom, UUID flightTo, String name, int parameter) {
+    public List<FlightsExternalInfo> getAllPaths(UUID flightFrom, UUID flightTo, String name, int parameter) {
         System.out.println(count++);
-        return (List<FlightsInfo>) dao.selectPaths2(Calculation.getInstance().getAllPathsFromTo(flightFrom, flightTo, name, parameter));
+        return flightAccessService.selectPaths(Calculation.getInstance().getAllPathsFromTo(flightFrom, flightTo, name, parameter));
     }
 
 }

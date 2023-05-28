@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Dropdown, FormControl, Button, Form } from 'react-bootstrap';
-import 'react-datepicker/dist/react-datepicker.css';
 import './resources/css/App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Modal from 'react-modal';
 import {getAirportList, getAllFilters, getAllFlights, uploadDoc} from './Api.jsx';
-import AdditionalInfo from './AdditionalInfo';
-import {useNavigate} from "react-router-dom";
 
 const App = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [searchTextOrigin, setSearchTextOrigin] = useState('');
   const [searchTextDestination, setSearchTextDestination] = useState('');
   const [selectedParam, setSelectedParam] = useState('Choose Param');
@@ -27,7 +23,7 @@ const App = () => {
   const [airportMap,setAirportMap] = useState([]);
   const [paramValue, setParamValue] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedInfo, setSelectedInfo] = useState({});
+  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -50,7 +46,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    getAllFlights(selectedItemOrigin,selectedItemDestination,selectedParam,paramValue,setFlightData,airportList,setAirportMap)
+    getAllFlights(selectedItemOrigin,selectedItemDestination,selectedParam,paramValue,setFlightData,airportList)
   }, [])
 
   const handleSearchOrigin = (event) => {
@@ -61,8 +57,12 @@ const App = () => {
     setSearchTextDestination(event.target.value);
   };
 
-  const handleDateChange = date => {
-    setSelectedDate(date);
+ const openDialogUpload = () => {
+   setUploadDialogOpen(true);
+ };
+
+  const closeDialogUpload = () => {
+    setUploadDialogOpen(false);
   };
 
   const openDialog = (flightData) => {
@@ -83,17 +83,6 @@ const App = () => {
   const handleSelectedParam = () => {
     setIsSelectedParam(true);
   };
-  const history = useNavigate();
-  const handleInfoClick = (array) => {
-    console.log(array);
-    setSelectedInfo(array);
-    console.log(selectedInfo);
-    //history('/info/123');
-  };
-  useEffect(() => {
-    console.log(selectedInfo); // Logs the updated state value
-  }, [selectedInfo]);
-
 
   const filteredOriginList = airportList.filter(item =>
     item.cityName.toLowerCase().includes(searchTextOrigin.toLowerCase())
@@ -109,16 +98,26 @@ const App = () => {
   return (
     <div className="container">
       <h1 className="topcenterHead">Djikstra Airport ✈️</h1>
-      <div>
-        <input type="file" onChange={handleFileChange} />
-        <button onClick={handleUpload}>Upload</button>
+      <div className="uploadButtonContainer">
+        <button className="uploadButton" onClick={() => openDialogUpload()}>File Upload</button>
       </div>
+      <Modal
+            isOpen={uploadDialogOpen}
+            onRequestClose={closeDialogUpload}
+            className="modal-content"
+            overlayClassName="modal-overlay"
+            center
+            ariaHideApp={false}
+          >
+  <div className="uploadContent"><input type="file" onChange={handleFileChange} />
+  <button onClick={handleUpload}>Upload</button></div>
+            <button className="btn btn-primary modalBtn border-2 border-dark" onClick={closeDialogUpload}>Close</button>
+          </Modal>
       <div className="dropdownContainer">
         <Dropdown className='selectionItems'>
           <Dropdown.Toggle variant="secondary">
             {selectedItemOriginShow}
           </Dropdown.Toggle>
-
           <Dropdown.Menu variant="dark">
             <FormControl
               type="text"
@@ -197,7 +196,6 @@ const App = () => {
             <th>Stopovers</th>
             <th>Total price</th>
             <th>Total distance</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -209,11 +207,12 @@ const App = () => {
                 <td>{airportMap.get(array.flight[0].fromId)}</td>
                 <td>{airportMap.get(array.flight[array.flight.length-1].toId)}</td>
                 <td onClick={hasStopovers ? () => openDialog(array.flight) : null}>
+                  <span className="stopoverText">
                   {hasStopovers ? `${stopoverCount} stopover${stopoverCount === 1 ? '' : 's'}` : 'Non-stop'}
+                  </span>
                 </td>
                 <td>{array.price}€</td>
                 <td>{array.distance}km</td>
-                <td onClick={()=>handleInfoClick(array)}>Show additional info</td>
               </tr>
             );
           })}
@@ -236,19 +235,21 @@ const App = () => {
       <table className="tabulamodal">
         <thead>
           <tr>
-            <th>Flight ID</th>
-            <th>From ID</th>
-            <th>To ID</th>
+            <th>Time of departure</th>
+            <th>From</th>
+            <th>Time of arrival</th>
+            <th>To</th>
             <th>Price</th>
             <th>Distance</th>
-            <th></th>
+            <th>Timezone</th>
           </tr>
         </thead>
         <tbody>
           {selectedFlight.map((flight, index) => (
             <tr key={index}>
-              <td>{flight.flightId}</td>
+              <td>{flight.timeOfDeparture}</td>
               <td>{airportMap.get(flight.fromId)}</td>
+              <td>{flight.timeOfArrival}</td>
               <td>
                 {index === selectedFlight.length - 1 ? (
                     airportMap.get(flight.toId)
@@ -260,7 +261,7 @@ const App = () => {
               </td>
               <td>{flight.price}€</td>
               <td>{flight.distance}km</td>
-              <td onClick={handleInfoClick}>Show additional info</td>
+              <td>{flight.timeZone}</td>
             </tr>
           ))}
         </tbody>

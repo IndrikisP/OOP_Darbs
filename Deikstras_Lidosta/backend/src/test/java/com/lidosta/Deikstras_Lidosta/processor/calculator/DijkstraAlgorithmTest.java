@@ -1,5 +1,6 @@
 package com.lidosta.Deikstras_Lidosta.processor.calculator;
 
+import com.lidosta.Deikstras_Lidosta.processor.calculator.response.FlightsInternalInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.junit.Assert;
@@ -30,6 +31,10 @@ public class DijkstraAlgorithmTest {
         counter = 0;
         testCounter = 0;
     }
+
+    /**
+     * Checks if all paths algorithm on 3x3 input
+     */
     @Test
     public void scenario1() {
         int size = 3;
@@ -52,14 +57,17 @@ public class DijkstraAlgorithmTest {
         testDistances.add(3);
         testDistances.add(2);
         testDistances.add(0);
-        List<PriceDistanceInfo>[][] tmpActual = new List[size][size];
-        List<PriceDistanceInfo>[][] expected = new List[size][size];
+        List<FlightsInternalInfo>[][] tmpActual = new List[size][size];
+        List<FlightsInternalInfo>[][] expected = new List[size][size];
 
         beforeAction(tmpActual, expected);
-        List<PriceDistanceInfo>[][] actual = executeScenario(tmpActual);
+        List<FlightsInternalInfo>[][] actual = executeScenario(tmpActual);
         afterAction(expected, actual);
 
     }
+    /**
+     * Checks if all paths algorithm on 5x5 input
+     */
     @Test
     public void scenario2() {
         int size = 5;
@@ -117,38 +125,33 @@ public class DijkstraAlgorithmTest {
         testDistances.add(4);
         testDistances.add(0);
 
-        List<PriceDistanceInfo>[][] tmpActual = new List[size][size];
-        List<PriceDistanceInfo>[][] expected = new List[size][size];
+        List<FlightsInternalInfo>[][] tmpActual = new List[size][size];
+        List<FlightsInternalInfo>[][] expected = new List[size][size];
 
         beforeAction(tmpActual, expected);
-        List<PriceDistanceInfo>[][] actual = executeScenario(tmpActual);
+        List<FlightsInternalInfo>[][] actual = executeScenario(tmpActual);
         afterAction(expected, actual);
 
     }
 
-    public List<PriceDistanceInfo>[][] executeScenario(List<PriceDistanceInfo>[][] pDInfoPrice) {
-        DijkstraAlgorithm algorithm = new DijkstraAlgorithm();
-        List<PriceDistanceInfo>[][] pDInfoPricen = pDInfoPrice;
-       // for (int i = 0; i < pDInfoPrice.length; i++) {
-           // pDInfoPricen = algorithm.dijkstra(pDInfoPricen, i);
-       // }
+    public List<FlightsInternalInfo>[][] executeScenario(List<FlightsInternalInfo>[][] pDInfoPrice) {
+        List<FlightsInternalInfo>[][] pDInfoPricen = pDInfoPrice;
         AllPathsAlgorithm allPathsAlgorithm = new AllPathsAlgorithm();
         allPathsAlgorithm.getAllFlights(pDInfoPricen);
         return pDInfoPricen;
     }
 
-    void beforeAction(List<PriceDistanceInfo>[][] pDInfoPrice, List<PriceDistanceInfo>[][] testPDInfoPrice) {
+    void beforeAction(List<FlightsInternalInfo>[][] pDInfoPrice, List<FlightsInternalInfo>[][] testPDInfoPrice) {
         for (int i = 0; i < pDInfoPrice.length; i++) {
             for (int j = 0; j < pDInfoPrice.length; j++) {
-                List<List<PriceDistanceInfo>> tmp = createSamplePriceDistanceInfoList();
+                List<List<FlightsInternalInfo>> tmp = createSamplePriceDistanceInfoList();
                 pDInfoPrice[i][j] = tmp.get(0);
                 testPDInfoPrice[i][j] = tmp.get(1);
-
             }
         }
     }
 
-    void afterAction(List<PriceDistanceInfo>[][] expected, List<PriceDistanceInfo>[][] actual) {
+    void afterAction(List<FlightsInternalInfo>[][] expected, List<FlightsInternalInfo>[][] actual) {
         for (int i = 0; i < expected.length; i++) {
             for (int j = 0; j < expected.length; j++) {
                 //Assert.assertEquals(expected[i][j].get(0).getDistance(), actual[i][j].get(0).getDistance());
@@ -157,12 +160,12 @@ public class DijkstraAlgorithmTest {
         }
     }
 
-    private List<List<PriceDistanceInfo>> createSamplePriceDistanceInfoList() {
-        List<PriceDistanceInfo> actual = new ArrayList<>();
-        List<PriceDistanceInfo> expected = new ArrayList<>();
+    private List<List<FlightsInternalInfo>> createSamplePriceDistanceInfoList() {
+        List<FlightsInternalInfo> actual = new ArrayList<>();
+        List<FlightsInternalInfo> expected = new ArrayList<>();
 
-        PriceDistanceInfo info1 = new PriceDistanceInfo(UUID.randomUUID(), 100.0f, distances.get(counter++));
-        PriceDistanceInfo info2 = new PriceDistanceInfo(UUID.randomUUID(), 100.0f, testDistances.get(testCounter++));
+        FlightsInternalInfo info1 = new FlightsInternalInfo(UUID.randomUUID(), 100.0f, distances.get(counter++));
+        FlightsInternalInfo info2 = new FlightsInternalInfo(UUID.randomUUID(), 100.0f, testDistances.get(testCounter++));
 
         actual.add(info1);
         expected.add(info2);
@@ -172,6 +175,6 @@ public class DijkstraAlgorithmTest {
     @Getter
     @AllArgsConstructor
     private static class InputParameters {
-        private final List<PriceDistanceInfo>[][] pDInfoPrice = new List[3][3];
+        private final List<FlightsInternalInfo>[][] pDInfoPrice = new List[3][3];
     }
 }
